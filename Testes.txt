@@ -1,0 +1,17 @@
+Testes à física:
+- Impulso gerado por cada rotação de cada remo;
+- Perda do momento da canoa ao bater numa pedra;
+- Paragem  da canoa ao bater frontalmente numa pedra;
+- Aumento do atrito na canoa ao percorrer uma zona com bancos de areia;
+- Aplicação de impulso gerado por corrente do rio;
+
+
+Testes à lógica:
+- Conclusão da prova ao chegar à meta;
+- Modificações à física de acordo com as interações dos elementos;
+- Correta cronometragem da prova;
+
+
+Testes à connecção:
+- Verificar que a comunicação entre os clientes e o servidor não é demasiado elevado;
+- A falha de comunicação deve gerar uma exceção no programa.
