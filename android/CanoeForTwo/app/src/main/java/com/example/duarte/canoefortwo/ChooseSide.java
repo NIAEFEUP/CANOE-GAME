@@ -34,8 +34,9 @@ public class ChooseSide extends Activity {
             public void onClick(View v) {
                 if(Singleton.getInstance().getConnection().choosePlayerNr(RIGHT))
                     startActivity(new Intent(ChooseSide.this, PlayActivity.class));
-                else
-                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_LONG);
+                else {
+                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -45,8 +46,9 @@ public class ChooseSide extends Activity {
             public void onClick(View v) {
                 if(Singleton.getInstance().getConnection().choosePlayerNr(LEFT))
                     startActivity(new Intent(ChooseSide.this, PlayActivity.class));
-                else
-                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_LONG);
+                else {
+                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

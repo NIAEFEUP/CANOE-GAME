@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Duarte on 04/06/2015.
  */
-public enum ClientServerMessages implements Serializable{
+public enum ClientServerMessages{
     CONNECT,
     DISCONNECT,
     TICK,
