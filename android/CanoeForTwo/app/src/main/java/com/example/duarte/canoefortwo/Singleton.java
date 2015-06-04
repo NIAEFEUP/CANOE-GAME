@@ -1,26 +1,29 @@
 package com.example.duarte.canoefortwo;
 
+import com.example.duarte.canoefortwo.network.ConnectionBridge;
+
 /**
- * Created by Duarte on 02/06/2015.
+ * Created by Duarte on 03/06/2015.
  */
-
 public class Singleton {
-    public enum State {CONNECTED , NOT_CONNECTED};
 
-    private static Singleton instance = null;
+    private ConnectionBridge connection;
 
-    //TODO retirar o state daqui, não faz sentido estar aqui. É preciso criar uma classe que está encarregue da connection com o servidor
-    State state;
+    private static Singleton ourInstance = new Singleton();
 
-
-    private Singleton(){
-        this.state = State.NOT_CONNECTED;
+    public static Singleton getInstance() {
+        return ourInstance;
     }
 
+    private Singleton() {
+        this.setConnection(new ConnectionBridge());
+    }
 
-    public static Singleton getInstance(){
-        if(instance == null)
-            instance = new Singleton();
-        return instance;
+    public ConnectionBridge getConnection() {
+        return connection;
+    }
+
+    public void setConnection(ConnectionBridge connection) {
+        this.connection = connection;
     }
 }

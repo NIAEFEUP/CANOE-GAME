@@ -1,31 +1,41 @@
 package com.example.duarte.canoefortwo;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.example.duarte.canoefortwo.R;
+import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
-public class ChooseSide extends ActionBarActivity {
+public class ChooseSide extends Activity {
+
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);this.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_connect_menu);
         setContentView(R.layout.activity_choose_side);
 
         final ImageButton rightButton = (ImageButton) findViewById(R.id.rightButton);
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(v.getClass().toString(), "Right Side");
-                startActivity(new Intent(ChooseSide.this, PlayActivity.class));
+                if(Singleton.getInstance().getConnection().choosePlayerNr(RIGHT))
+                    startActivity(new Intent(ChooseSide.this, PlayActivity.class));
+                else
+                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_LONG);
             }
         });
 
@@ -33,7 +43,10 @@ public class ChooseSide extends ActionBarActivity {
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(v.getClass().toString(), "Left Side");
+                if(Singleton.getInstance().getConnection().choosePlayerNr(LEFT))
+                    startActivity(new Intent(ChooseSide.this, PlayActivity.class));
+                else
+                    Toast.makeText(ChooseSide.this, "Side already selected by another player", Toast.LENGTH_LONG);
             }
         });
 
@@ -41,8 +54,7 @@ public class ChooseSide extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(v.getClass().toString(), "Go Back");
-                Singleton.getInstance().state = Singleton.State.NOT_CONNECTED;
+                Singleton.getInstance().getConnection().disconnect();
                 finish();
             }
         });
@@ -51,7 +63,7 @@ public class ChooseSide extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
-        if(Singleton.getInstance().state == Singleton.State.NOT_CONNECTED)
+        if(Singleton.getInstance().getConnection().getState() == ConnectionBridge.State.NOT_CONNECTED)
             finish();
     }
 
@@ -60,20 +72,5 @@ public class ChooseSide extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_choose_side, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

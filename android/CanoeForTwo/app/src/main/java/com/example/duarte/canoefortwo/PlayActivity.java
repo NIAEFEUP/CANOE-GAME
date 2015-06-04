@@ -1,5 +1,6 @@
 package com.example.duarte.canoefortwo;
 
+import com.example.duarte.canoefortwo.network.ClientServerMessages;
 import com.example.duarte.canoefortwo.util.SystemUiHider;
 
 import android.app.Activity;
@@ -11,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+
+import java.io.IOException;
 
 
 /**
@@ -70,8 +73,8 @@ public class PlayActivity extends Activity {
         strokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v(this.getClass().toString(), "Stroke");
-                progressBar.setProgress(progressBar.getProgress() + 1);
+                try { Singleton.getInstance().getConnection().sendMessage(ClientServerMessages.TICK);}
+                catch (IOException e){e.printStackTrace();}
             }
         });
 
@@ -85,9 +88,7 @@ public class PlayActivity extends Activity {
     }
 
     private void disconnectServer() {
-        Singleton singleton = Singleton.getInstance();
-
-        singleton.state = Singleton.State.NOT_CONNECTED;
+        Singleton.getInstance().getConnection().disconnect();
         finish();
     }
 
