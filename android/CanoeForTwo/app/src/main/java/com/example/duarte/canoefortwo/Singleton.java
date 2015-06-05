@@ -8,6 +8,7 @@ import com.example.duarte.canoefortwo.network.ConnectionBridge;
 public class Singleton {
 
     private ConnectionBridge connection;
+    private Player player;
 
     private static Singleton ourInstance = new Singleton();
 
@@ -17,13 +18,22 @@ public class Singleton {
 
     private Singleton() {
         this.setConnection(new ConnectionBridge());
+        this.setPlayer(new Player());
     }
 
     public ConnectionBridge getConnection() {
         return connection;
     }
 
-    public void setConnection(ConnectionBridge connection) {
+    private void setConnection(ConnectionBridge connection) {
         this.connection = connection;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    private void setPlayer(Player player) {
+        this.player = player;
     }
 }
