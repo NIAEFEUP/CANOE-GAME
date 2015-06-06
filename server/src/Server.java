@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Duarte on 03/06/2015.
  */
-public class Server {
+public class Server implements Runnable{
 
     final static int PORT = 4445;
     final static int BUF_SIZE = 1024;
@@ -136,23 +136,24 @@ public class Server {
         }
     }
 
-    public void run() throws IOException{
-        @SuppressWarnings("resource")
-        DatagramSocket socket = new DatagramSocket(PORT);
-        System.out.println(InetAddress.getLocalHost().getHostAddress());
+    public void run(){
+        try {
+            DatagramSocket socket = new DatagramSocket(PORT);
+            System.out.println(InetAddress.getLocalHost().getHostAddress());
 
-        while (true) {
-            byte[] buf = new byte[BUF_SIZE];
-            DatagramPacket received = new DatagramPacket(buf, buf.length);
-            socket.receive(received);
-//          System.out.println(received.getAddress() + " " + received.getPort());
+            while (true) {
+                byte[] buf = new byte[BUF_SIZE];
+                DatagramPacket received = new DatagramPacket(buf, buf.length);
+                socket.receive(received);
 
-            new Thread(new Responder(socket,received)).start();
+                new Thread(new Responder(socket,received)).start();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws IOException {
-        Server server = new Server();
-        server.run();
+        new Thread(new Server()).start();
     }
 }
