@@ -34,11 +34,11 @@ public class Server implements Runnable{
         }
 
         public void disconnectClient(){
-            int number = client.playerNr;
-            client.socket = null;
+            int number = client.getPlayerNr();
+            client.setSocket(null);
             if(number!= 0)
                 clients.set(number - 1,null);
-            client.playerNr = 0;
+            client.setPlayerNr(0);
             System.out.println("Player " + number + " has disconnected");
         }
 
@@ -46,12 +46,12 @@ public class Server implements Runnable{
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (client.playerNr != 0 && client != null) {
+                    while (client.getPlayerNr() != 0 && client != null) {
                         try {
                             Thread.sleep(200);
-                            if(client.rowValue > 0){
-                                client.rowValue -= 5;
-                                client.sendToClient("" + client.rowValue);
+                            if(client.getRowValue() > 0){
+                                client.setRowValue(client.getRowValue() - 5);
+                                client.sendToClient("" + client.getRowValue());
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -69,15 +69,15 @@ public class Server implements Runnable{
                     if (clients.get(0) != null)
                         return false;
                     clients.set(0, client);
-                    client.playerNr = 1;
-                    System.out.println("Client IP: " + client.address + " is now player " + client.playerNr);
+                    client.setPlayerNr(1);
+                    System.out.println("Client IP: " + client.getAddress() + " is now player " + client.getPlayerNr());
                     return true;
                 case CHOOSE_PLAYER_2:
                     if (clients.get(1) != null)
                         return false;
                     clients.set(1, client);
-                    client.playerNr = 2;
-                    System.out.println("Client IP: " + client.address + " is now player " + client.playerNr);
+                    client.setPlayerNr(2);
+                    System.out.println("Client IP: " + client.getAddress() + " is now player " + client.getPlayerNr());
                     return true;
                 case DISCONNECT:
                     disconnectClient();
@@ -92,23 +92,23 @@ public class Server implements Runnable{
                 makeConnection();
 
 
-                while(client.socket != null && client.playerNr == 0) {
+                while(client.getSocket() != null && client.getPlayerNr() == 0) {
                     boolean result = clientOptSide();
                     if(result)
                         client.sendToClient(ClientServerMessages.SUCCESS.toString());
                     else
-                        if(client.socket != null)
+                        if(client.getSocket() != null)
                             client.sendToClient(ClientServerMessages.FAILED.toString());
                 }
 
                 startRowUpdate();
 
-                while(client.socket != null){
+                while(client.getSocket() != null){
                     byte[] buf = client.receiveFromClient();
                     ClientServerMessages message = ClientServerMessages.valueOf(new String(buf).trim());
                     switch (message){
                         case TICK:
-                            sentTick(client.playerNr);
+                            sentTick(client.getPlayerNr());
                             break;
                         default:
                             disconnectClient();
@@ -124,12 +124,12 @@ public class Server implements Runnable{
     public void sentTick(int playerNr){
         System.out.println("Player nr " + playerNr +" - TICK!");
         Client client = clients.get(playerNr -1);
-        if(client.rowValue != Client.ROW_VALUE){
-            client.rowValue += 10;
-            if(client.rowValue > Client.ROW_VALUE)
-                client.rowValue = Client.ROW_VALUE;
+        if(client.getRowValue() != Client.ROW_VALUE){
+            client.setRowValue(client.getRowValue() + 10);
+            if(client.getRowValue() > Client.ROW_VALUE)
+                client.setRowValue(Client.ROW_VALUE);
             try{
-                client.sendToClient("" + client.rowValue);
+                client.sendToClient("" + client.getRowValue());
             }catch (IOException e){
                 e.printStackTrace();
             }

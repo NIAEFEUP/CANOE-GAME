@@ -16,7 +16,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
- * Este código não é nosso, baseamo-nos num tutorial do site crunchify.com
+ * Este código não é nosso, baseamo-nos num tutorial do site crunchify.com. Apenas alteramos algumas coisas.
  *
  * @author Crunchify.com
  *
