@@ -101,4 +101,52 @@ public class Track implements CanoeObserver {
     private void applyImpulseRight() {
         canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 3.0f)), canoe.getBody().getWorldPoint(new Vector2(0.5f, 0.0f)), true);
     }
+
+    public float getMarginWidth() {
+        return marginWidth;
+    }
+
+    public void setMarginWidth(float marginWidth) {
+        this.marginWidth = marginWidth;
+    }
+
+    public long getTimeRecord() {
+        return timeRecord;
+    }
+
+    public void setTimeRecord(long timeRecord) {
+        this.timeRecord = timeRecord;
+    }
+
+    public Canoe getCanoe() {
+        return canoe;
+    }
+
+    public void setCanoe(Canoe canoe) {
+        this.canoe = canoe;
+    }
+
+    public River getRiver() {
+        return river;
+    }
+
+    public void setRiver(River river) {
+        this.river = river;
+    }
+
+    public List<Rock> getRocks() {
+        return rocks;
+    }
+
+    public void setRocks(List<Rock> rocks) {
+        this.rocks = rocks;
+    }
+
+    public List<SandBank> getSandBanks() {
+        return sandBanks;
+    }
+
+    public void setSandBanks(List<SandBank> sandBanks) {
+        this.sandBanks = sandBanks;
+    }
 }
