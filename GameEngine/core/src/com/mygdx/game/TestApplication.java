@@ -66,7 +66,7 @@ public class TestApplication extends ApplicationAdapter implements InputProcesso
         riverSprite.setSize(1, 1);
         riverSprite.setOriginCenter();
 
-        img = new Texture("core/assets/Sand2.png");
+        img = new Texture("core/assets/Sand.png");
         img.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         sandBankSprite = new Sprite(img);
         sandBankSprite.setSize(1, 1);
