@@ -9,7 +9,7 @@ public class Player {
     public Player(){
         int rowSpeed = 0;
     }
-    
+
     public static int getRowSpeed() {
         return rowSpeed;
     }

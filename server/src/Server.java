@@ -139,7 +139,11 @@ public class Server implements Runnable{
     public void run(){
         try {
             DatagramSocket socket = new DatagramSocket(PORT);
-            System.out.println(InetAddress.getLocalHost().getHostAddress());
+            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "res/ServerIP.png"))
+                System.out.println(InetAddress.getLocalHost().getHostAddress());
+            else{
+                System.out.println("Error creating IP QRCode");
+            }
 
             while (true) {
                 byte[] buf = new byte[BUF_SIZE];

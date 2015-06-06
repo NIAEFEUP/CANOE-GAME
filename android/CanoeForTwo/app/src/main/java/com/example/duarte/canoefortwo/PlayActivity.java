@@ -47,6 +47,8 @@ public class PlayActivity extends Activity {
             }
         });
 
+
+
         final Button disconnectButton = (Button) findViewById(R.id.disconnectButton);
         disconnectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public class PlayActivity extends Activity {
                     rowSpeed = Singleton.getInstance().getPlayer().getRowSpeed();
                     progressBarHandler.post(new Runnable() {
                         public void run() {
-                            //Log.v("progressBarHandler", "" + Player.getRowSpeed());
+//                            Log.v("progressBarHandler", "" + Player.getRowSpeed());
                             progressBar.setProgress(rowSpeed);
                         }
                     });
