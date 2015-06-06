@@ -2,13 +2,11 @@
 import com.sun.java.util.jar.pack.Instruction;
 */
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Duarte on 03/06/2015.
@@ -48,7 +46,7 @@ public class Server {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (client.playerNr != 0 || client != null) {
+                    while (client.playerNr != 0 && client != null) {
                         try {
                             Thread.sleep(200);
                             if(client.rowValue > 0){
