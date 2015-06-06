@@ -4,37 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.duarte.canoefortwo.util.SystemUiHider;
-
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 
 
 public class ConnectMenu extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* this.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         setContentView(R.layout.activity_connect_menu);
 
-        final Singleton singleton = Singleton.getInstance();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -80,6 +64,8 @@ public class ConnectMenu extends Activity {
                 }
             }
         });
+
+
     }
 
     @Override
@@ -94,9 +80,11 @@ public class ConnectMenu extends Activity {
 
             }
             if(resultCode == RESULT_CANCELED){
-                Toast.makeText(ConnectMenu.this, "QR code reading failed", Toast.LENGTH_SHORT);
+                Toast.makeText(ConnectMenu.this, "QR code reading failed", Toast.LENGTH_SHORT).show();
             }
         }
+
+
     }
 
     public void onResume(){

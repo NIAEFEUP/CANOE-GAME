@@ -2,19 +2,16 @@ package com.example.duarte.canoefortwo;
 
 import com.example.duarte.canoefortwo.network.ClientServerMessages;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
-import com.example.duarte.canoefortwo.util.SystemUiHider;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
 
 import java.io.IOException;
@@ -29,7 +26,6 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);

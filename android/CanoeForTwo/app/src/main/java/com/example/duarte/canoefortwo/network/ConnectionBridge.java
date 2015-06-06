@@ -1,6 +1,5 @@
 package com.example.duarte.canoefortwo.network;
 
-import android.os.Looper;
 import android.util.Log;
 
 import com.example.duarte.canoefortwo.ChooseSide;
@@ -12,6 +11,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 /**
+ * Establishes the connection with the server
+ *
  * Created by Duarte on 04/06/2015.
  */
 public class ConnectionBridge{
@@ -102,7 +103,7 @@ public class ConnectionBridge{
             while (state == State.CONNECTED){
                 try {
                     String received = receiveStringMessage();
-                    Singleton.getInstance().getPlayer().setRowSpeed(new Integer(received));
+                    Singleton.getInstance().getPlayer().setRowSpeed(Integer.valueOf(received));
                 }catch (IOException e){
                     e.printStackTrace();
                 }

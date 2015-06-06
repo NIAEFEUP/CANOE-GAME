@@ -3,6 +3,8 @@ package com.example.duarte.canoefortwo;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
 /**
+ * Singleton
+ *
  * Created by Duarte on 03/06/2015.
  */
 public class Singleton {
@@ -20,6 +22,7 @@ public class Singleton {
         this.setConnection(new ConnectionBridge());
         this.setPlayer(new Player());
     }
+
 
     public ConnectionBridge getConnection() {
         return connection;

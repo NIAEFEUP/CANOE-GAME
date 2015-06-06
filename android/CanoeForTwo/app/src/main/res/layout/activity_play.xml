@@ -12,7 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:focusable="false"
-        android:focusableInTouchMode="false"></FrameLayout>
+        android:focusableInTouchMode="false"/>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -30,8 +30,7 @@
                     android:max="100"
                     android:progress="50"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:progressBackgroundTint="#FFFFFF"></ProgressBar>
+                    android:paddingRight="20dp"/>
             </RelativeLayout>
 
             <ImageButton

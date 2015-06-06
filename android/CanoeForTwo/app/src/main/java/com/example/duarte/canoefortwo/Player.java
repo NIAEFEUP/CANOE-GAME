@@ -1,16 +1,18 @@
 package com.example.duarte.canoefortwo;
 
 /**
+ * Information about the player stats
+ *
  * Created by Duarte on 05/06/2015.
  */
 public class Player {
-    private static int rowSpeed;
+    private int rowSpeed;
 
     public Player(){
-        int rowSpeed = 0;
+        this.rowSpeed = 0;
     }
 
-    public static int getRowSpeed() {
+    public int getRowSpeed() {
         return rowSpeed;
     }
 
