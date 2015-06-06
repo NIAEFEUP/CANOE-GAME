@@ -38,22 +38,7 @@ public class ConnectionBridge{
         this.setState(State.NOT_CONNECTED);
     }
 
-    public class ReceiveValuesFromServer implements Runnable{
 
-        @Override
-        public void run() {
-            while (state == State.CONNECTED){
-                Log.v("Receive from server", "receive a correr");
-                try {
-                    String received = receiveStringMessage();
-                    Log.v("Received packet", received);
-                    Singleton.getInstance().getPlayer().setRowSpeed(new Integer(received));
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
     public class StartConnection implements Runnable{
         String ipString;
@@ -111,6 +96,20 @@ public class ConnectionBridge{
         return new String(packet.getData()).trim();
     }
 
+    public class ReceiveValuesFromServer implements Runnable{
+        @Override
+        public void run() {
+            while (state == State.CONNECTED){
+                try {
+                    String received = receiveStringMessage();
+                    Singleton.getInstance().getPlayer().setRowSpeed(new Integer(received));
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public boolean choosePlayerNr(int playerNr){
         try {
             switch (playerNr) {
@@ -126,7 +125,7 @@ public class ConnectionBridge{
 
             if(receiveMessage() == ClientServerMessages.SUCCESS) {
                 Log.v("Player option", "Success");
-                new Thread(new ReceiveValuesFromServer());
+                new Thread(new ReceiveValuesFromServer()).start();
                 return true;
             }
 
@@ -157,6 +156,7 @@ public class ConnectionBridge{
             e.printStackTrace();
         }
         this.state = State.NOT_CONNECTED;
+        Singleton.getInstance().getPlayer().setRowSpeed(0);
     }
 
 
