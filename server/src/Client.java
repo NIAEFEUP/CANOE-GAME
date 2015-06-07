@@ -37,9 +37,9 @@ public class Client {
 
 
     /**
-     * Handles the reception from a client's message through it's socket.
+     * Handles the reception from a client's message through.
      *
-     * @return  message received from the cliente in a byte[].
+     * @return  message received from the cliente in a byte[]
      * @throws IOException
      */
     public byte[] receiveFromClient() throws IOException{
