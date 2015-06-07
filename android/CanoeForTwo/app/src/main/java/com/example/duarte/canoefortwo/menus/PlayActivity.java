@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import java.io.IOException;
 
 public class PlayActivity extends Activity {
+
     private Handler progressBarHandler = new Handler();
     private int rowSpeed = 0;
 
@@ -27,6 +28,7 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
