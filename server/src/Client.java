@@ -11,7 +11,7 @@ public class Client {
 
     private int port;
     private int playerNr;
-    private int rowValue;
+    private int rowSpeed;
     private InetAddress address;
     private DatagramSocket socket;
 
@@ -20,16 +20,28 @@ public class Client {
         this.setPort(port);
         this.setPlayerNr(0);
         this.setAddress(address);
-        this.setRowValue(0);
+        this.setRowSpeed(0);
         this.setSocket(new DatagramSocket(null));
     }
 
-
+    /**
+     * Sends a message to the client through it's socket.
+     *
+     * @param message   message to be sent.
+     * @throws IOException
+     */
     public void sendToClient(String message) throws IOException{
         DatagramPacket packet = new DatagramPacket(message.getBytes(), message.getBytes().length, getAddress(), getPort());
         getSocket().send(packet);
     }
 
+
+    /**
+     * Handles the reception from a client's message through it's socket.
+     *
+     * @return  message received from the cliente in a byte[].
+     * @throws IOException
+     */
     public byte[] receiveFromClient() throws IOException{
         byte[] buf = new byte[Server.BUF_SIZE];
         DatagramPacket received = new DatagramPacket(buf, buf.length);
@@ -53,12 +65,12 @@ public class Client {
         this.playerNr = playerNr;
     }
 
-    public int getRowValue() {
-        return rowValue;
+    public int getRowSpeed() {
+        return rowSpeed;
     }
 
-    public void setRowValue(int rowValue) {
-        this.rowValue = rowValue;
+    public void setRowSpeed(int rowSpeed) {
+        this.rowSpeed = rowSpeed;
     }
 
     public InetAddress getAddress() {

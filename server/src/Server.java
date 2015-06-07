@@ -21,9 +21,10 @@ public class Server implements Runnable{
 
     public Server(){
         super();
-        this.clients = new ArrayList<Client>(2);
-        this.clients.add(null);
-        this.clients.add(null);
+        this.clients = new ArrayList<Client>(MAX_PLAYERS_NUMBER);
+        for(int i = 0; i < MAX_PLAYERS_NUMBER; i++){
+            this.clients.add(null);
+        }
     }
 
 
@@ -33,6 +34,10 @@ public class Server implements Runnable{
             super(socket,packet);
         }
 
+        /**
+         * Disconnects the client from the server.
+         * If the client is already assigned to a position it removes him from there to.
+         */
         public void disconnectClient(){
             int number = client.getPlayerNr();
             client.setSocket(null);
@@ -42,6 +47,12 @@ public class Server implements Runnable{
             System.out.println("Player " + number + " has disconnected");
         }
 
+
+        /**
+         * Creates a thread that handles the decrease of the rowSpeed over time.
+         * The thread executes every 200 miliseconds and decreases the rowSpeed by 5. The rowSpeed never falls behind 0.
+         * When the rowSpeed is 0 it does nothing.
+         */
         private void startRowUpdate(){
             new Thread(new Runnable() {
                 @Override
@@ -49,9 +60,11 @@ public class Server implements Runnable{
                     while (client.getPlayerNr() != 0 && client != null) {
                         try {
                             Thread.sleep(200);
-                            if(client.getRowValue() > 0){
-                                client.setRowValue(client.getRowValue() - 5);
-                                client.sendToClient("" + client.getRowValue());
+                            if(client.getRowSpeed() > 0){
+                                client.setRowSpeed(client.getRowSpeed() - 5);
+                                client.sendToClient("" + client.getRowSpeed());
+                                if(client.getRowSpeed() < 0)
+                                    client.setRowSpeed(0);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -61,6 +74,12 @@ public class Server implements Runnable{
             }).start();
         }
 
+        /**
+         * Handles the side choosing from the player.
+         *
+         * @return If the player succeeds to get the position he choose. If the player chooses to disconnect it also returns false.
+         * @throws IOException
+         */
         public boolean clientOptSide() throws IOException{
             byte[] buf = client.receiveFromClient();
             ClientServerMessages message = ClientServerMessages.valueOf(new String(buf).trim());
@@ -121,15 +140,20 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * Increases player rowSpeed by 10.
+     *
+     * @param playerNr  Player who sent the Tick
+     */
     public void sentTick(int playerNr){
         System.out.println("Player nr " + playerNr +" - TICK!");
         Client client = clients.get(playerNr -1);
-        if(client.getRowValue() != Client.ROW_VALUE){
-            client.setRowValue(client.getRowValue() + 10);
-            if(client.getRowValue() > Client.ROW_VALUE)
-                client.setRowValue(Client.ROW_VALUE);
+        if(client.getRowSpeed() != Client.ROW_VALUE){
+            client.setRowSpeed(client.getRowSpeed() + 10);
+            if(client.getRowSpeed() > Client.ROW_VALUE)
+                client.setRowSpeed(Client.ROW_VALUE);
             try{
-                client.sendToClient("" + client.getRowValue());
+                client.sendToClient("" + client.getRowSpeed());
             }catch (IOException e){
                 e.printStackTrace();
             }
