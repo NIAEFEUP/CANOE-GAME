@@ -1,5 +1,5 @@
 /**
- * Created by Duarte on 04/06/2015.
+ * ClientServerMessages. Enum with the messages used to communicate with the server.
  */
 public enum ClientServerMessages{
     CONNECT,

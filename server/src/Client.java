@@ -4,7 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 /**
- * Created by Duarte on 04/06/2015.
+ * Class that has the clients information and that handles communication with the client.
  */
 public class Client {
     final static int ROW_VALUE = 100;
