@@ -3,9 +3,7 @@ package com.example.duarte.canoefortwo;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
 /**
- * Singleton
- *
- * Created by Duarte on 03/06/2015.
+ * Singleton. Has all of the game information.
  */
 public class Singleton {
 

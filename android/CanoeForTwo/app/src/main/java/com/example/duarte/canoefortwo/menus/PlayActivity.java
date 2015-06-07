@@ -1,5 +1,7 @@
-package com.example.duarte.canoefortwo;
+package com.example.duarte.canoefortwo.menus;
 
+import com.example.duarte.canoefortwo.R;
+import com.example.duarte.canoefortwo.Singleton;
 import com.example.duarte.canoefortwo.network.ClientServerMessages;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
@@ -26,11 +28,10 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
-
-        final View contentView = findViewById(R.id.activity_play);
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 

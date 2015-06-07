@@ -24,6 +24,16 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  */
 
 public class QRCodeGenerator {
+
+
+    /**
+     * Creates a .png file with a QRCode in the given that has the given information.
+     *
+     *
+     * @param myCodeText    info    Information the user wants the QRCode to return.
+     * @param filePath      path    Location of the image, must have name and extension. Exemple "res/qrcode.png"
+     * @return                      True if it succeeds, false if it fails creating the image.
+     */
     public static boolean createCode(String myCodeText, String filePath) {
         int size = 125;
         String fileType = "png";

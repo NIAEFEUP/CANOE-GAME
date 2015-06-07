@@ -2,7 +2,7 @@ package com.example.duarte.canoefortwo.network;
 
 import android.util.Log;
 
-import com.example.duarte.canoefortwo.ChooseSide;
+import com.example.duarte.canoefortwo.menus.ChooseSide;
 import com.example.duarte.canoefortwo.Singleton;
 
 import java.io.IOException;
@@ -12,8 +12,6 @@ import java.net.InetAddress;
 
 /**
  * Establishes the connection with the server
- *
- * Created by Duarte on 04/06/2015.
  */
 public class ConnectionBridge{
 
@@ -40,7 +38,9 @@ public class ConnectionBridge{
     }
 
 
-
+    /**
+     * Establishes a connection with the server.
+     */
     public class StartConnection implements Runnable{
         String ipString;
         public StartConnection(String ip){
@@ -75,13 +75,25 @@ public class ConnectionBridge{
 
         }
     }
-    
+
+    /**
+     * Sends one of the predefined messages to the server through the socket.
+     *
+     * @param message
+     * @throws IOException
+     */
     public void sendMessage(ClientServerMessages message) throws IOException{
         byte[] buf = message.toString().getBytes();
         DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, privatePort);
         socket.send(packet);
     }
-    
+
+    /**
+     * Receives a message from the server through the socket.
+     *
+     * @return  message received.
+     * @throws IOException
+     */
     public ClientServerMessages receiveMessage() throws IOException{
         byte[] buf = new byte[BUF_SIZE];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -90,6 +102,13 @@ public class ConnectionBridge{
         return ClientServerMessages.valueOf(new String(packet.getData()).trim());
     }
 
+    /**
+     * Receives a message from the server through the socket.
+     * The received message is returned as a string.
+     *
+     * @return  message received
+     * @throws IOException
+     */
     public String receiveStringMessage() throws IOException{
         byte[] buf = new byte[BUF_SIZE];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -97,6 +116,9 @@ public class ConnectionBridge{
         return new String(packet.getData()).trim();
     }
 
+    /***
+     * Receives the rowSpeed values from the server and updates the local player stats.
+     */
     public class ReceiveValuesFromServer implements Runnable{
         @Override
         public void run() {
@@ -111,6 +133,13 @@ public class ConnectionBridge{
         }
     }
 
+    /**
+     * Sends a message to the server with the position the user wants to play in.
+     * Verifies the response from the server and returns if it was successful or not.
+     *
+     * @param   playerNr    position in which the user wants to play in.
+     * @return              result.
+     */
     public boolean choosePlayerNr(int playerNr){
         try {
             switch (playerNr) {
@@ -129,9 +158,6 @@ public class ConnectionBridge{
                 new Thread(new ReceiveValuesFromServer()).start();
                 return true;
             }
-
-
-
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -139,17 +165,33 @@ public class ConnectionBridge{
         return false;
     }
 
+    /**
+     * Creates a thread to handle the connection attempt to the server using the StartConnection class.
+     * During 3 seconds verifies if the connection has benn established.
+     * Upon success it changes the connection state to CONNECTED.
+     * If not sends a interrupt signal to the thread.
+     *
+     * @param ip    Server's IP.
+     * @return      connection resutl.
+     * @throws      IOException
+     */
     public boolean connect(String ip) throws IOException {
-        new Thread(new StartConnection(ip)).start();
+        Thread startConnection = new Thread(new StartConnection(ip));
+        startConnection.start();
 
         long initTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - initTime < 3000){
             if(this.getState() == State.CONNECTED)
                 return true;
         }
+        startConnection.interrupt();
         return false;
     }
 
+    /**
+     * Sends a message to the server saying the it wants to disconnect.
+     * Then it changes the state to NOT_CONNECTED
+     */
     public void disconnect(){
         try {
             sendMessage(ClientServerMessages.DISCONNECT);
