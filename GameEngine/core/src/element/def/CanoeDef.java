@@ -12,7 +12,7 @@ public class CanoeDef extends GameElementDef {
     private static final BodyDef bodyDef = initBodyDef();
     private static final FixtureDef fixtureDef = initFixtureDef();
 
-    public static final float damping = 0.2f;
+    public static final float damping = 0.3f;
 
     public CanoeDef() {
         super(bodyDef, fixtureDef, WIDTH, HEIGHT);
@@ -40,7 +40,7 @@ public class CanoeDef extends GameElementDef {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.allowSleep = false;
         bodyDef.linearDamping = damping;
-        bodyDef.linearDamping = damping;
+        bodyDef.angularDamping = damping;
 
         return bodyDef;
     }

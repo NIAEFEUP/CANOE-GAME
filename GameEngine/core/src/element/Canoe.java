@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Canoe extends GameElement {
     private static final float ANGULAR_IMPULSE = 50f;
-    private static final float ANGULAR_DAMPING = 0.01f;
+    private static final float ANGULAR_DAMPING = 0.1f;
     private Paddle leftPaddle;
     private Paddle rightPaddle;
     private List<CanoeObserver> observers;
