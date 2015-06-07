@@ -1,8 +1,6 @@
 package Engine;
 
-import Engine.Track;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -84,7 +82,6 @@ public class TrackRenderer {
         marginSprite.setPosition(-cameraWidth / 2, 0);
         marginSprite.draw(batch);
 
-
         riverSprite.setSize(track.getRiver().getWidth(), track.getRiver().getHeight());
         riverSprite.setU(0f);
         riverSprite.setU2(track.getRiver().getWidth());
@@ -124,13 +121,13 @@ public class TrackRenderer {
         paddleSprite.setSize(track.getCanoe().getHeight() / 20, track.getCanoe().getHeight() / 2);
         paddleSprite.setOrigin(paddleSprite.getWidth() / 2, paddleSprite.getHeight() * 9f / 10f);
 
-        paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
-                track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
+        paddleSprite.setPosition((float) (track.getCanoe().getBody().getPosition().x - paddleSprite.getWidth() / 2 + Math.cos(track.getCanoe().getBody().getAngle()) * track.getCanoe().getWidth() / 2),
+                (float) (track.getCanoe().getBody().getPosition().y - 9 * paddleSprite.getHeight() / 10 + Math.sin(track.getCanoe().getBody().getAngle()) * track.getCanoe().getWidth() / 2));
         paddleSprite.setRotation((float) (Math.cos(track.getCanoe().getRightPaddle().getAngle() * Math.PI / 180) * 35 + 90 + track.getCanoe().getBody().getAngle() * 180 / Math.PI));
         paddleSprite.draw(batch);
 
-        paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (-track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
-                track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
+        paddleSprite.setPosition((float)(track.getCanoe().getBody().getPosition().x - paddleSprite.getWidth() / 2 - Math.cos(track.getCanoe().getBody().getAngle()) * track.getCanoe().getWidth() / 2),
+                (float) (track.getCanoe().getBody().getPosition().y - 9 * paddleSprite.getHeight() / 10 - Math.sin(track.getCanoe().getBody().getAngle()) * track.getCanoe().getWidth() / 2));
         paddleSprite.setRotation((float) (-(Math.cos(track.getCanoe().getLeftPaddle().getAngle() * Math.PI / 180) * 35 + 90) + track.getCanoe().getBody().getAngle() * 180 / Math.PI));
         paddleSprite.draw(batch);
 
