@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Canoe extends GameElement {
     private static final float ANGULAR_IMPULSE = 50f;
-    private static final float ANGULAR_DAMPING = 0.2f;
+    private static final float ANGULAR_DAMPING = 0.1f;
     private Paddle leftPaddle;
     private Paddle rightPaddle;
     private List<CanoeObserver> observers;
@@ -46,8 +46,25 @@ public class Canoe extends GameElement {
 
     private void notifyObservers() {
         for (CanoeObserver observer : observers)
-            observer.onRow(leftPaddle.getAngle(), rightPaddle.getAngle());
+            observer.onRow(leftPaddle.getAngle(), leftPaddle.getAngularVelocity(),
+                    rightPaddle.getAngle(), rightPaddle.getAngularVelocity());
         leftPaddle.setAngle(leftPaddle.getAngle() % 360f);
         rightPaddle.setAngle(rightPaddle.getAngle() % 360f);
+    }
+
+    public Paddle getLeftPaddle() {
+        return leftPaddle;
+    }
+
+    public void setLeftPaddle(Paddle leftPaddle) {
+        this.leftPaddle = leftPaddle;
+    }
+
+    public Paddle getRightPaddle() {
+        return rightPaddle;
+    }
+
+    public void setRightPaddle(Paddle rightPaddle) {
+        this.rightPaddle = rightPaddle;
     }
 }

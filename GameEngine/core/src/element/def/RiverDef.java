@@ -19,14 +19,14 @@ public class RiverDef extends GameElementDef {
     }
 
     private static FixtureDef initFixtureDef(float width, float height) {
-        LinkedList<Vector2> vertex = new LinkedList<Vector2>();
-        vertex.addLast(new Vector2(-width / 2, -height / 2));
-        vertex.addLast(new Vector2(width / 2, -height / 2));
-        vertex.addLast(new Vector2(width / 2, height / 2));
-        vertex.addLast(new Vector2(-width / 2, height / 2));
+        Vector2[] vertex = new Vector2[4];
+        vertex[0] = new Vector2(-width / 2, -height / 2);
+        vertex[1] = new Vector2(width / 2, -height / 2);
+        vertex[2] = new Vector2(width / 2, height / 2);
+        vertex[3] = new Vector2(-width / 2, height / 2);
 
         ChainShape shape = new ChainShape();
-        shape.createLoop((Vector2[]) vertex.toArray());
+        shape.createLoop(vertex);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
