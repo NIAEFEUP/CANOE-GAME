@@ -1,6 +1,7 @@
 package com.mygdx.game.desktop;
 
 import Engine.GameEngine;
+import Server.Server;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.TestApplication;
@@ -10,7 +11,7 @@ import java.awt.*;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "hello-world";
+		cfg.title = "CanoeForTwo";
 
 		// Full screen window ///////////////////////////////////////
 		DisplayMode screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();

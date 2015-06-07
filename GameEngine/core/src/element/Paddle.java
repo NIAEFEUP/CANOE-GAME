@@ -10,8 +10,8 @@ public class Paddle {
     private float angle;
     private float angularVelocity;
     private float angularDamping;
-    private final float ANGULAR_VELOCITY_THRESHOLD = 0.1f;
-    private final float MAX_ANGULAR_VELOCITY = 720f;
+    public final static float ANGULAR_VELOCITY_THRESHOLD = 0.1f;
+    public final static float MAX_ANGULAR_VELOCITY = 360f;
 
     public Paddle(float angularDamping) {
         angle = 0;

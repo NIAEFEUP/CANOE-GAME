@@ -2,20 +2,25 @@ package Server;/*
 import com.sun.java.util.jar.pack.Instruction;
 */
 
+
+import element.CanoeObserver;
+import element.Paddle;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Observable;
 
-/**
- * Created by Duarte on 03/06/2015.
- */
-public class Server implements Runnable{
 
-    final static int PORT = 4445;
+public class Server extends Observable implements Runnable, CanoeObserver{
+
+    static int PORT = 4445;
     final static int BUF_SIZE = 1024;
-    final static int MAX_PLAYERS_NUMBER = 2;
+    public final static int MAX_PLAYERS_NUMBER = 2;
+    public final static int LEFT_SIDE = 1;
+    public final static int RIGHT_SIDE = 2;
 
     ArrayList<Client> clients;
 
@@ -27,6 +32,13 @@ public class Server implements Runnable{
         }
     }
 
+    @Override
+    public void onRow(float leftAngle, float leftVelocity, float rightAngle, float rightVelocity) {
+        if(this.clients.get(0) != null)
+            this.clients.get(0).setRowSpeed((int) (leftVelocity/ Paddle.MAX_ANGULAR_VELOCITY * 100));
+        if(this.clients.get(1) != null)
+            this.clients.get(1).setRowSpeed((int) (rightVelocity / Paddle.MAX_ANGULAR_VELOCITY * 100));
+    }
 
     public class Responder extends ClientConnection {
 
@@ -57,14 +69,13 @@ public class Server implements Runnable{
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    int previousRowSpeed = 0;
                     while (client.getPlayerNr() != 0 && client != null) {
                         try {
                             Thread.sleep(200);
-                            if(client.getRowSpeed() > 0){
-                                client.setRowSpeed(client.getRowSpeed() - 5);
+                            if(client.getRowSpeed() != previousRowSpeed){
+                                previousRowSpeed = client.getRowSpeed();
                                 client.sendToClient("" + client.getRowSpeed());
-                                if(client.getRowSpeed() < 0)
-                                    client.setRowSpeed(0);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -147,23 +158,14 @@ public class Server implements Runnable{
      */
     public void sentTick(int playerNr){
         System.out.println("Player nr " + playerNr +" - TICK!");
-        Client client = clients.get(playerNr -1);
-        if(client.getRowSpeed() != Client.ROW_VALUE){
-            client.setRowSpeed(client.getRowSpeed() + 10);
-            if(client.getRowSpeed() > Client.ROW_VALUE)
-                client.setRowSpeed(Client.ROW_VALUE);
-            try{
-                client.sendToClient("" + client.getRowSpeed());
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
+        setChanged();
+        notifyObservers(playerNr);
     }
 
     public void run(){
         try {
             DatagramSocket socket = new DatagramSocket(PORT);
-            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "res/ServerIP.png"))
+            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "core/res/ServerIP.png"))
                 System.out.println(InetAddress.getLocalHost().getHostAddress());
             else{
                 System.out.println("Error creating IP QRCode");

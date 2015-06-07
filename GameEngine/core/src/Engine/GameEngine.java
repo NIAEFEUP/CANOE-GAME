@@ -1,5 +1,6 @@
 package Engine;
 
+import Server.Server;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 public class GameEngine extends ApplicationAdapter{
     Track track;
     TrackRenderer renderer;
-    TrackController controller;
+    RemoteTrackController controller;
 
     @Override
     public void create() {
@@ -20,11 +21,14 @@ public class GameEngine extends ApplicationAdapter{
         cfg.margin = 5f;
         track = new Track(cfg);
         renderer = new TrackRenderer(track);
+        Server server = new Server();
+        new Thread(server).start();
 
         track.start();
         track.getCanoe().getBody().setLinearVelocity(0f, 0f);
 
-        controller = new TrackController(track);
+        //controller = new TrackController(track);
+        controller = new RemoteTrackController(track, server);
     }
 
     @Override
@@ -35,8 +39,8 @@ public class GameEngine extends ApplicationAdapter{
 
     @Override
     public void render() {
-        System.out.println(track.getCanoe().getLeftPaddle().getAngle());
-        System.out.println(track.getCanoe().getLeftPaddle().getAngularVelocity());
+//        System.out.println(track.getCanoe().getLeftPaddle().getAngle());
+//        System.out.println(track.getCanoe().getLeftPaddle().getAngularVelocity());
         track.update(1f / 60f);
         renderer.render();
     }
