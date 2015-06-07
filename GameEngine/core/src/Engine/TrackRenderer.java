@@ -126,12 +126,12 @@ public class TrackRenderer {
 
         paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
                 track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
-        paddleSprite.setRotation((float) Math.cos(track.getCanoe().getRightPaddle().getAngle() * Math.PI / 180) * 35 + 90);
+        paddleSprite.setRotation((float) (Math.cos(track.getCanoe().getRightPaddle().getAngle() * Math.PI / 180) * 35 + 90 + track.getCanoe().getBody().getAngle() * 180 / Math.PI));
         paddleSprite.draw(batch);
 
         paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (-track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
                 track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
-        paddleSprite.setRotation((float) -(Math.cos(track.getCanoe().getLeftPaddle().getAngle() * Math.PI / 180) * 35 + 90));
+        paddleSprite.setRotation((float) (-(Math.cos(track.getCanoe().getLeftPaddle().getAngle() * Math.PI / 180) * 35 + 90) + track.getCanoe().getBody().getAngle() * 180 / Math.PI));
         paddleSprite.draw(batch);
 
         batch.end();
