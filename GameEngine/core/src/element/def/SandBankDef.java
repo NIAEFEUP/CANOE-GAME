@@ -1,5 +1,6 @@
 package element.def;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -20,7 +21,8 @@ public class SandBankDef extends GameElementDef {
 
     private static FixtureDef initFixtureDef(float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width, height);
+
+        shape.setAsBox(width /2 , height / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;

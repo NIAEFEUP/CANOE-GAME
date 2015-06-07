@@ -1,12 +1,8 @@
 package com.mygdx.game.desktop;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
+import Engine.GameEngine;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.Color;
-import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.TestApplication;
 
 import java.awt.*;
@@ -20,10 +16,10 @@ public class DesktopLauncher {
 		DisplayMode screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		cfg.width = screen.getWidth();
 		cfg.height = screen.getHeight();
-		cfg.fullscreen = true;
+		cfg.fullscreen = false;
 		/////////////////////////////////////////////////////////////
 
 
-		new LwjglApplication(new TestApplication(), cfg);
+		new LwjglApplication(new GameEngine(), cfg);
 	}
 }

@@ -46,7 +46,8 @@ public class Canoe extends GameElement {
 
     private void notifyObservers() {
         for (CanoeObserver observer : observers)
-            observer.onRow(leftPaddle.getAngle(), rightPaddle.getAngle());
+            observer.onRow(leftPaddle.getAngle(), leftPaddle.getAngularVelocity(),
+                    rightPaddle.getAngle(), rightPaddle.getAngularVelocity());
         leftPaddle.setAngle(leftPaddle.getAngle() % 360f);
         rightPaddle.setAngle(rightPaddle.getAngle() % 360f);
     }

@@ -75,13 +75,12 @@ public class TestApplication extends ApplicationAdapter implements InputProcesso
         img = new Texture("core/assets/Grass.png");
         img.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         grassSprite = new Sprite(img);
-        grassSprite.setSize(1, 1);
         grassSprite.setOriginCenter();
         grassSprite.setSize(cameraWidth, riverLength);
         grassSprite.setU(0);
-        grassSprite.setU(cameraWidth);
+        grassSprite.setU2(cameraWidth);
         grassSprite.setV(0);
-        grassSprite.setV(cameraHeight);
+        grassSprite.setV2(cameraHeight);
 
 
         world = new World(new Vector2(0f, 0f), true);
