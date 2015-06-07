@@ -94,6 +94,11 @@ public class TrackRenderer {
                                 track.getRiver().getBody().getPosition().y - track.getRiver().getHeight() / 2);
         riverSprite.draw(batch);
 
+        finishLineSprite.setSize(track.getFinishLine().getWidth(), track.getFinishLine().getHeight());
+        finishLineSprite.setPosition(track.getFinishLine().getBody().getPosition().x - track.getFinishLine().getWidth() / 2,
+                track.getFinishLine().getBody().getPosition().y - track.getFinishLine().getHeight() / 2);
+        finishLineSprite.draw(batch);
+
         for (SandBank sandBank : track.getSandBanks())
         {
             sandBankSprite.setSize(sandBank.getWidth(), sandBank.getHeight());

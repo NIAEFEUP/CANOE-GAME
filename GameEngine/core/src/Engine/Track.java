@@ -181,6 +181,9 @@ public class Track implements CanoeObserver, ContactListener {
             canoe.getBody().setLinearDamping(SandBank.damping);
             canoe.getBody().setAngularDamping(SandBank.damping);
         }
+        else if (collidedElemType.equals(FinishLine.class.getSimpleName())) {
+            finished = true;
+        }
     }
 
     @Override
