@@ -9,6 +9,7 @@ import element.Paddle;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Observable;
 
 
@@ -160,11 +161,30 @@ public class Server extends Observable implements Runnable, CanoeObserver{
         notifyObservers(playerNr);
     }
 
+    public static String getIPAdress() {
+        try {
+            for (Enumeration<?> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = (NetworkInterface) en.nextElement();
+                for (Enumeration<?> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = (InetAddress) enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        String ipAddress = inetAddress.getHostAddress().toString();
+                        return ipAddress;
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            System.out.println("Socket exception in getting IP Adress" + ex.toString());
+        }
+        return null;
+    }
+
     public void run(){
         try {
             DatagramSocket socket = new DatagramSocket(PORT);
-            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "core/assets/ServerIP.png"))
-                System.out.println(InetAddress.getLocalHost().getHostAddress());
+            String ip = getIPAdress();
+            if(QRCodeGenerator.createCode(ip, "core/assets/ServerIP.png"))
+                System.out.println(ip);
             else{
                 System.out.println("Error creating IP QRCode");
             }
