@@ -3,8 +3,6 @@ package com.example.duarte.canoefortwo.network;
 
 /**
  * ClientServerMessages. Enum with the messages used to communicate with the server.
- *
- * Created by Duarte on 04/06/2015.
  */
 public enum ClientServerMessages{
     CONNECT,

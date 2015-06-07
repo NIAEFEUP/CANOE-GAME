@@ -1,5 +1,7 @@
-package com.example.duarte.canoefortwo;
+package com.example.duarte.canoefortwo.menus;
 
+import com.example.duarte.canoefortwo.R;
+import com.example.duarte.canoefortwo.Singleton;
 import com.example.duarte.canoefortwo.network.ClientServerMessages;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
@@ -17,7 +19,6 @@ import android.widget.ProgressBar;
 import java.io.IOException;
 
 public class PlayActivity extends Activity {
-
     private Handler progressBarHandler = new Handler();
     private int rowSpeed = 0;
 
@@ -29,8 +30,6 @@ public class PlayActivity extends Activity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
-
-        final View contentView = findViewById(R.id.activity_play);
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 

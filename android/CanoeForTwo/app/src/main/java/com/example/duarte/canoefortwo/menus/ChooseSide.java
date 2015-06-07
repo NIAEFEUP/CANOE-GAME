@@ -1,4 +1,4 @@
-package com.example.duarte.canoefortwo;
+package com.example.duarte.canoefortwo.menus;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.duarte.canoefortwo.R;
+import com.example.duarte.canoefortwo.Singleton;
 import com.example.duarte.canoefortwo.network.ConnectionBridge;
 
 public class ChooseSide extends Activity {
