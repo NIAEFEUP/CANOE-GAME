@@ -45,6 +45,7 @@ public class TrackRenderer {
         viewport = new FitViewport(cameraWidth, cameraHeight, camera);
 
         canoeSprite = new Sprite(new Texture("core/assets/Kayak.png"));
+        paddleSprite = new Sprite(new Texture("core/assets/Paddle.png"));
 
         rockSprite = new Sprite(new Texture("core/assets/Rock.png"));
 
@@ -119,6 +120,19 @@ public class TrackRenderer {
         canoeSprite.setPosition(track.getCanoe().getBody().getPosition().x - track.getCanoe().getWidth() / 2,
                 track.getCanoe().getBody().getPosition().y - track.getCanoe().getHeight() / 2);
         canoeSprite.draw(batch);
+
+        paddleSprite.setSize(track.getCanoe().getHeight() / 20, track.getCanoe().getHeight() / 2);
+        paddleSprite.setOrigin(paddleSprite.getWidth() / 2, paddleSprite.getHeight() * 9f / 10f);
+
+        paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
+                track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
+        paddleSprite.setRotation((float) Math.cos(track.getCanoe().getRightPaddle().getAngle() * Math.PI / 180) * 35 + 90);
+        paddleSprite.draw(batch);
+
+        paddleSprite.setPosition(track.getCanoe().getBody().getPosition().x + (-track.getCanoe().getWidth() - paddleSprite.getWidth()) / 2,
+                track.getCanoe().getBody().getPosition().y - paddleSprite.getHeight());
+        paddleSprite.setRotation((float) -(Math.cos(track.getCanoe().getLeftPaddle().getAngle() * Math.PI / 180) * 35 + 90));
+        paddleSprite.draw(batch);
 
         batch.end();
     }

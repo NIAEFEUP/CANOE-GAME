@@ -28,6 +28,9 @@ public class Track implements CanoeObserver, ContactListener {
     private List<SandBank> sandBanks;
     private int insideSandBank = 0;
 
+    private boolean impulseAppliedLeft;
+    private boolean impulseAppliedRight;
+
     private float lag = 0.0f;
 
     public Track(TrackConfig cfg) {
@@ -81,6 +84,8 @@ public class Track implements CanoeObserver, ContactListener {
         finished = false;
         running = true;
         insideSandBank = 0;
+        impulseAppliedLeft = false;
+        impulseAppliedRight = false;
 
         lag = 0.0f;
     }
@@ -92,6 +97,7 @@ public class Track implements CanoeObserver, ContactListener {
 
                 while (lag >= UPDATE_STEP) {
                     world.step(UPDATE_STEP, 2, 3);
+                    canoe.update(UPDATE_STEP);
                     lag -= UPDATE_STEP;
                 }
             }
@@ -100,19 +106,28 @@ public class Track implements CanoeObserver, ContactListener {
 
     @Override
     public void onRow(float leftAngle, float leftVelocity, float rightAngle, float rightVelocity) {
-        if (leftAngle > 360)
+        if (leftAngle > 90 && !impulseAppliedLeft) {
             applyImpulseLeft();
-        if (rightAngle > 360)
+            impulseAppliedLeft = true;
+        }
+        else if (leftAngle > 360)
+            impulseAppliedLeft = false;
+
+        if (rightAngle > 90 && !impulseAppliedRight){
             applyImpulseRight();
+            impulseAppliedRight = true;
+        }
+        else if (rightAngle > 360)
+            impulseAppliedRight = false;
     }
 
     private void applyImpulseLeft() {
-        canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 3.0f)), canoe.getBody().getWorldPoint(new Vector2(-0.5f, 0.0f)), true);
+        canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 50.0f)), canoe.getBody().getWorldPoint(new Vector2(-0.5f, 0.0f)), true);
     }
 
 
     private void applyImpulseRight() {
-        canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 3.0f)), canoe.getBody().getWorldPoint(new Vector2(0.5f, 0.0f)), true);
+        canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 50.0f)), canoe.getBody().getWorldPoint(new Vector2(0.5f, 0.0f)), true);
     }
 
     public float getMarginWidth() {

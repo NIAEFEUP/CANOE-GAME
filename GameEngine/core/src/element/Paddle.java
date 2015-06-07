@@ -11,7 +11,7 @@ public class Paddle {
     private float angularVelocity;
     private float angularDamping;
     private final float ANGULAR_VELOCITY_THRESHOLD = 0.1f;
-    private final float MAX_ANGULAR_VELOCITY = 100f;
+    private final float MAX_ANGULAR_VELOCITY = 720f;
 
     public Paddle(float angularDamping) {
         angle = 0;
@@ -41,8 +41,8 @@ public class Paddle {
     }
 
     public void update(float timeStep) {
-        angle += angularVelocity * timeStep / 1000;
-        angularVelocity *= angularDamping * timeStep / 1000;
+        angle += angularVelocity * timeStep;
+        angularVelocity *= (1 - angularDamping * timeStep);
         if (angularVelocity < ANGULAR_VELOCITY_THRESHOLD)
             angularVelocity = 0;
     }
