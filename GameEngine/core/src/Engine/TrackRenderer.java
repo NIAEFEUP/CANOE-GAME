@@ -22,6 +22,7 @@ public class TrackRenderer {
     private Sprite sandBankSprite;
     private Sprite marginSprite;
     private Sprite paddleSprite;
+    private Sprite finishLineSprite;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -44,6 +45,8 @@ public class TrackRenderer {
 
         canoeSprite = new Sprite(new Texture("core/assets/Kayak.png"));
         paddleSprite = new Sprite(new Texture("core/assets/Paddle.png"));
+        finishLineSprite = new Sprite(new Texture("core/assets/FinishLine.png"));
+        finishLineSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         rockSprite = new Sprite(new Texture("core/assets/Rock.png"));
 

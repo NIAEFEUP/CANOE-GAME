@@ -7,9 +7,7 @@ import element.CanoeObserver;
 import element.Paddle;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -165,7 +163,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
     public void run(){
         try {
             DatagramSocket socket = new DatagramSocket(PORT);
-            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "core/res/ServerIP.png"))
+            if(QRCodeGenerator.createCode(InetAddress.getLocalHost().getHostAddress(), "core/assets/ServerIP.png"))
                 System.out.println(InetAddress.getLocalHost().getHostAddress());
             else{
                 System.out.println("Error creating IP QRCode");

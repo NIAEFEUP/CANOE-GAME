@@ -23,6 +23,7 @@ public class Track implements CanoeObserver, ContactListener {
     private GameElementBodyFactory factory;
     private Canoe canoe;
     private River river;
+    private FinishLine finishLine;
 
     private List<Rock> rocks;
     private List<SandBank> sandBanks;
@@ -43,6 +44,10 @@ public class Track implements CanoeObserver, ContactListener {
         RiverDef riverDef = new RiverDef(cfg.width, cfg.length);
         river = new River(factory.build(riverDef), riverDef.getWidth(), riverDef.getHeight());
         river.getBody().setTransform(0f, river.getHeight() / 2, 0);
+
+        FinishLineDef finishLineDef = new FinishLineDef(cfg.width);
+        finishLine = new FinishLine(factory.build(finishLineDef), finishLineDef.getWidth(), finishLineDef.getHeight());
+        finishLine.getBody().setTransform(0f, river.getHeight() - finishLine.getHeight() / 2, 0);
 
         CanoeDef canoeDef = new CanoeDef();
         canoe = new Canoe(factory.build(canoeDef), canoeDef.getWidth(), canoeDef.getHeight());
@@ -134,49 +139,31 @@ public class Track implements CanoeObserver, ContactListener {
         return marginWidth;
     }
 
-    public void setMarginWidth(float marginWidth) {
-        this.marginWidth = marginWidth;
-    }
 
     public long getTimeRecord() {
         return timeRecord;
     }
 
-    public void setTimeRecord(long timeRecord) {
-        this.timeRecord = timeRecord;
-    }
 
     public Canoe getCanoe() {
         return canoe;
     }
 
-    public void setCanoe(Canoe canoe) {
-        this.canoe = canoe;
-    }
 
     public River getRiver() {
         return river;
     }
 
-    public void setRiver(River river) {
-        this.river = river;
-    }
 
     public List<Rock> getRocks() {
         return rocks;
     }
 
-    public void setRocks(List<Rock> rocks) {
-        this.rocks = rocks;
-    }
 
     public List<SandBank> getSandBanks() {
         return sandBanks;
     }
 
-    public void setSandBanks(List<SandBank> sandBanks) {
-        this.sandBanks = sandBanks;
-    }
 
     @Override
     public void beginContact(Contact contact) {
@@ -224,5 +211,9 @@ public class Track implements CanoeObserver, ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public FinishLine getFinishLine() {
+        return finishLine;
     }
 }
