@@ -9,22 +9,15 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Observable;
 
 /**
  * Establishes the connection with the server
  */
-public class ConnectionBridge{
+public class ConnectionBridge extends Observable{
 
     public static final int BUF_SIZE = 1024;
     public static final int PORT = 4445;
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
 
     public enum State {CONNECTED , NOT_CONNECTED}
 
@@ -71,8 +64,6 @@ public class ConnectionBridge{
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-
         }
     }
 
@@ -125,6 +116,8 @@ public class ConnectionBridge{
             while (state == State.CONNECTED){
                 try {
                     String received = receiveStringMessage();
+                    if(received.equals( ClientServerMessages.DISCONNECT))
+                        setState(State.NOT_CONNECTED);
                     Singleton.getInstance().getPlayer().setRowSpeed(Integer.valueOf(received));
                 }catch (IOException e){
                     e.printStackTrace();
@@ -198,8 +191,19 @@ public class ConnectionBridge{
         }catch (Exception e){
             e.printStackTrace();
         }
-        this.state = State.NOT_CONNECTED;
+        setState(State.NOT_CONNECTED);
         Singleton.getInstance().getPlayer().setRowSpeed(0);
+
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+        setChanged();
+        notifyObservers();
     }
 
 

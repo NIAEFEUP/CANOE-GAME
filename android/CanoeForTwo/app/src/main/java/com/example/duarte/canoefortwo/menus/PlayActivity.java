@@ -17,8 +17,10 @@ import android.widget.ProgressBar;
 
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PlayActivity extends Activity {
+public class PlayActivity extends Activity implements Observer {
 
     private Handler progressBarHandler = new Handler();
     private int rowSpeed = 0;
@@ -32,6 +34,8 @@ public class PlayActivity extends Activity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
+
+        Singleton.getInstance().getConnection().addObserver(this);
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -78,5 +82,11 @@ public class PlayActivity extends Activity {
     @Override
     public void onBackPressed() {
         disconnectServer();
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if (Singleton.getInstance().getConnection().getState()== ConnectionBridge.State.NOT_CONNECTED)
+            finish();
     }
 }
