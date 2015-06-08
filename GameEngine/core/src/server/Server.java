@@ -29,7 +29,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
         for(int i = 0; i < MAX_PLAYERS_NUMBER; i++){
             this.clients.add(null);
         }
-        String ip = getIPAdress();
+        String ip = getIPAddress();
         if(QRCodeGenerator.createCode(ip, "core/assets/ServerIP.png"))
             System.out.println(ip);
         else{
@@ -186,7 +186,12 @@ public class Server extends Observable implements Runnable, CanoeObserver{
         }
     }
 
-    public static String getIPAdress() {
+    /**
+     * Get the IP address.
+     *
+     * @return  IP Address
+     */
+    public static String getIPAddress() {
         try {
             for (Enumeration<?> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = (NetworkInterface) en.nextElement();
