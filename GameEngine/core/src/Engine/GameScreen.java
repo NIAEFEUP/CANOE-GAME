@@ -17,11 +17,19 @@ public class GameScreen implements Screen {
         this.game = game;
         TrackConfig cfg = new TrackConfig();
         cfg.width = 10f;
-        cfg.length = 30f;
+        cfg.length = 25f;
         cfg.margin = 5f;
         track = new Track(cfg);
-        renderer = new GDXTrackRenderer(track);
 
+        track.addRock(3, 10);
+        track.addRock(4, 15);
+        track.addRock(-2, 13);
+        track.addRock(2, 15);
+
+        track.addSandBank(-2, 20, 4, 5);
+        track.addSandBank(0, 10, 2, 8);
+
+        renderer = new GDXTrackRenderer(track);
         controller = new RemoteTrackController(track, server);
     }
 

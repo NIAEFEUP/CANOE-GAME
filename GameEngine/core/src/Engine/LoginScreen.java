@@ -20,9 +20,10 @@ public class LoginScreen implements Screen {
     private Sprite connectedPlayer;
     private Sprite disconnectedPlayer;
     private Sprite qrCode;
+    private Sprite background;
     private OrthographicCamera camera;
     private FitViewport viewport;
-    private static final float cameraWidth = 20;
+    private static final float cameraWidth = 40;
     private static final float cameraHeight = 20;
 
 
@@ -36,7 +37,11 @@ public class LoginScreen implements Screen {
         camera.update();
         viewport = new FitViewport(cameraWidth, cameraHeight, camera);
         camera.update();
+
         batch = new SpriteBatch();
+
+        background = new Sprite(new Texture("core/assets/Background.png"));
+        background.setSize(cameraWidth, cameraHeight);
         connectedPlayer = new Sprite(new Texture("core/assets/Connected.png"));
         connectedPlayer.setSize(5, 5);
         disconnectedPlayer = new Sprite(new Texture("core/assets/Disconnected.png"));
@@ -63,23 +68,26 @@ public class LoginScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
+        background.draw(batch);
+
         if (server.getClients().get(Server.LEFT_SIDE - 1) != null){
-            connectedPlayer.setPosition(0, 0);
+            connectedPlayer.setPosition(connectedPlayer.getWidth(), 0);
             connectedPlayer.draw(batch);
         }
         else{
-            disconnectedPlayer.setPosition(0, 0);
+            disconnectedPlayer.setPosition(disconnectedPlayer.getWidth(), 0);
             disconnectedPlayer.draw(batch);
         }
 
         if (server.getClients().get(Server.RIGHT_SIDE - 1) != null){
-            connectedPlayer.setPosition(cameraWidth - connectedPlayer.getWidth(), 0);
+            connectedPlayer.setPosition(cameraWidth - 2 * connectedPlayer.getWidth(), 0);
             connectedPlayer.flip(true, false);
             connectedPlayer.draw(batch);
             connectedPlayer.flip(true, false);
         }
         else{
-            disconnectedPlayer.setPosition(cameraWidth - disconnectedPlayer.getWidth(), 0);
+            disconnectedPlayer.setPosition(cameraWidth - 2 * disconnectedPlayer.getWidth(), 0);
             disconnectedPlayer.flip(true, false);
             disconnectedPlayer.draw(batch);
             disconnectedPlayer.flip(true, false);
