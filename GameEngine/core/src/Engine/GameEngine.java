@@ -24,7 +24,9 @@ public class GameEngine extends Game {
     public void nextScreen() {
         if (getScreen() == loginScreen)
             setScreen(gameScreen);
-        else if (getScreen() == gameScreen)
+        else if (getScreen() == gameScreen){
+            server.disconnectAllPlayers();
             Gdx.app.exit();
+        }
     }
 }
