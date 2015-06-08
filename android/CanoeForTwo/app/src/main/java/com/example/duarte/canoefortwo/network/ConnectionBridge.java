@@ -70,8 +70,8 @@ public class ConnectionBridge extends Observable{
     /**
      * Sends one of the predefined messages to the server through the socket.
      *
-     * @param message
-     * @throws IOException
+     * @param message   Message sent
+     * @throws          IOException
      */
     public void sendMessage(ClientServerMessages message) throws IOException{
         byte[] buf = message.toString().getBytes();
@@ -116,8 +116,10 @@ public class ConnectionBridge extends Observable{
             while (state == State.CONNECTED){
                 try {
                     String received = receiveStringMessage();
-                    if(received.equals( ClientServerMessages.DISCONNECT))
+                    if(received.equals( ClientServerMessages.DISCONNECT.toString())) {
                         setState(State.NOT_CONNECTED);
+                        return;
+                    }
                     Singleton.getInstance().getPlayer().setRowSpeed(Integer.valueOf(received));
                 }catch (IOException e){
                     e.printStackTrace();
