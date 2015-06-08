@@ -40,13 +40,13 @@ public class LoginScreen implements Screen {
 
         batch = new SpriteBatch();
 
-        background = new Sprite(new Texture("core/assets/Background.png"));
+        background = new Sprite(new Texture(Gdx.files.classpath("assets/Background.png")));
         background.setSize(cameraWidth, cameraHeight);
-        connectedPlayer = new Sprite(new Texture("core/assets/Connected.png"));
+        connectedPlayer = new Sprite(new Texture(Gdx.files.classpath("assets/Connected.png")));
         connectedPlayer.setSize(5, 5);
-        disconnectedPlayer = new Sprite(new Texture("core/assets/Disconnected.png"));
+        disconnectedPlayer = new Sprite(new Texture(Gdx.files.classpath("assets/Disconnected.png")));
         disconnectedPlayer.setSize(5, 5);
-        qrCode = new Sprite(new Texture("core/assets/ServerIP.png"));
+        qrCode = new Sprite(new Texture(Gdx.files.local("ServerIP.png")));
         qrCode.setSize(5, 5);
         qrCode.setPosition((cameraWidth - 5) / 2, (cameraHeight - 5) / 2);
     }

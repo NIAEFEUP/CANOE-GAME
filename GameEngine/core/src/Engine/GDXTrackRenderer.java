@@ -43,20 +43,20 @@ public class GDXTrackRenderer implements TrackRenderer {
         camera.update();
         viewport = new FitViewport(cameraWidth, cameraHeight, camera);
 
-        canoeSprite = new Sprite(new Texture("core/assets/Kayak.png"));
-        paddleSprite = new Sprite(new Texture("core/assets/Paddle.png"));
-        finishLineSprite = new Sprite(new Texture("core/assets/FinishLine.png"));
+        canoeSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Kayak.png")));
+        paddleSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Paddle.png")));
+        finishLineSprite = new Sprite(new Texture(Gdx.files.classpath("assets/FinishLine.png")));
         finishLineSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        rockSprite = new Sprite(new Texture("core/assets/Rock.png"));
+        rockSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Rock.png")));
 
-        sandBankSprite = new Sprite(new Texture("core/assets/Sand.png"));
+        sandBankSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Sand.png")));
         sandBankSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        riverSprite = new Sprite(new Texture("core/assets/Water.png"));
+        riverSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Water.png")));
         riverSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        marginSprite = new Sprite(new Texture("core/assets/Grass.png"));
+        marginSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Grass.png")));
         marginSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
 

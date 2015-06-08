@@ -3,6 +3,7 @@ import com.sun.java.util.jar.pack.Instruction;
 */
 
 
+import com.badlogic.gdx.Gdx;
 import element.CanoeObserver;
 import element.Paddle;
 
@@ -30,7 +31,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
             this.clients.add(null);
         }
         String ip = getIPAddress();
-        if(QRCodeGenerator.createCode(ip, "core/assets/ServerIP.png"))
+        if(QRCodeGenerator.createCode(ip, "ServerIP.png"))
             System.out.println(ip);
         else{
             System.out.println("Error creating IP QRCode");
