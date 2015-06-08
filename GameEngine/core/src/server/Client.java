@@ -29,8 +29,8 @@ public class Client {
     /**
      * Sends a message to the client through it's socket.
      *
-     * @param message   message to be sent.
-     * @throws IOException
+     * @param message       message to be sent.
+     * @throws IOException  Throws IOException.
      */
     public void sendToClient(String message) throws IOException{
         DatagramPacket packet = new DatagramPacket(message.getBytes(), message.getBytes().length, getAddress(), getPort());
@@ -41,8 +41,8 @@ public class Client {
     /**
      * Handles the reception from a client's message through.
      *
-     * @return  message received from the cliente in a byte[]
-     * @throws IOException
+     * @return              message received from the cliente in a byte[]
+     * @throws IOException  Throws IOException.
      */
     public byte[] receiveFromClient() throws IOException{
         byte[] buf = new byte[Server.BUF_SIZE];

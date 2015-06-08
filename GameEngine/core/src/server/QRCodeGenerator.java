@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 /**
- * Este código não é nosso, baseamo-nos num tutorial do site crunchify.com. Apenas alteramos algumas coisas.
+ * Based upon a tutorial from crunchify.com
  *
  * @author Crunchify.com
  *

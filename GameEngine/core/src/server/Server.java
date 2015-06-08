@@ -97,8 +97,8 @@ public class Server extends Observable implements Runnable, CanoeObserver{
         /**
          * Handles the side choosing from the player.
          *
-         * @return If the player succeeds to get the position he choose. If the player chooses to disconnect it also returns false.
-         * @throws IOException
+         * @return              If the player succeeds to get the position he choose. If the player chooses to disconnect it also returns false.
+         * @throws IOException  Throws IOException.
          */
         public boolean clientOptSide() throws IOException{
             byte[] buf = client.receiveFromClient();
