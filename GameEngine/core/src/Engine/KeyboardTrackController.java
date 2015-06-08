@@ -1,6 +1,5 @@
-package Engine;
+package engine;
 
-import Engine.Track;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -18,9 +17,8 @@ public class KeyboardTrackController implements InputProcessor, TrackController{
     public KeyboardTrackController(Track track) {
         this.track = track;
 
-        Gdx.input.setInputProcessor(this);
-        rowLeft.set(0);
-        rowRight.set(0);
+        rowLeft = new AtomicInteger(0);
+        rowRight = new AtomicInteger(0);
     }
 
     @Override
@@ -85,5 +83,15 @@ public class KeyboardTrackController implements InputProcessor, TrackController{
             track.getCanoe().rowRight();
             rowRight.decrementAndGet();
         }
+    }
+
+    @Override
+    public void connect() {
+        Gdx.input.setInputProcessor(this);
+    }
+
+    @Override
+    public void disconnect() {
+        Gdx.input.setInputProcessor(null);
     }
 }

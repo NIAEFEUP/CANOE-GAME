@@ -1,43 +1,69 @@
-package Engine;
+package engine;
 
-import Server.Server;
-import com.badlogic.gdx.ApplicationAdapter;
+import server.Server;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 
 /**
  * Created by Flávio on 07/06/2015.
  */
-public class GameScreen extends ApplicationAdapter{
-    Track track;
-    GDXTrackRenderer renderer;
-    TrackController controller;
+public class GameScreen implements Screen {
+    private Track track;
+    private GDXTrackRenderer renderer;
+    private TrackController controller;
+    private GameEngine game;
 
-    @Override
-    public void create() {
+    public GameScreen(GameEngine game, Server server) {
+        this.game = game;
         TrackConfig cfg = new TrackConfig();
         cfg.width = 10f;
         cfg.length = 30f;
         cfg.margin = 5f;
         track = new Track(cfg);
         renderer = new GDXTrackRenderer(track);
-        Server server = new Server();
-        new Thread(server).start();
-
-        track.start();
-        track.getCanoe().getBody().setLinearVelocity(0f, 0f);
 
         controller = new RemoteTrackController(track, server);
     }
 
     @Override
+    public void show() {
+        track.start();
+        controller.connect();
+    }
+
+    @Override
+    public void render(float delta) {
+        if (!track.isFinished()) {
+            controller.processInput();
+            track.update(delta);
+            renderer.render();
+        }
+        else
+            game.nextScreen();
+    }
+
+    @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
         renderer.resize(width, height);
     }
 
     @Override
-    public void render() {
-        controller.processInput();
-        track.update(1f / 60f);
-        renderer.render();
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+        controller.disconnect();
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

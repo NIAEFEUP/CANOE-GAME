@@ -1,6 +1,5 @@
-package Engine;
+package engine;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import element.*;
@@ -218,5 +217,9 @@ public class Track implements CanoeObserver, ContactListener {
 
     public FinishLine getFinishLine() {
         return finishLine;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }

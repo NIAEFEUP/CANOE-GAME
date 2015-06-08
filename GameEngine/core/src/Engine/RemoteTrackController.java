@@ -1,11 +1,11 @@
-package Engine;
+package engine;
 
 
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Server.Server;
+import server.Server;
 
 
 /**
@@ -15,13 +15,13 @@ public class RemoteTrackController implements Observer, TrackController{
     private Track track;
     private AtomicInteger rowLeft;
     private AtomicInteger rowRight;
+    private Server server;
 
     public RemoteTrackController(Track track, Server server){
         this.track = track;
-        server.addObserver(this);
-        track.getCanoe().addObserver(server);
-        rowLeft.set(0);
-        rowRight.set(0);
+        this.server = server;
+        rowLeft = new AtomicInteger(0);
+        rowRight = new AtomicInteger(0);
     }
 
     @Override
@@ -47,5 +47,17 @@ public class RemoteTrackController implements Observer, TrackController{
             track.getCanoe().rowRight();
             rowRight.decrementAndGet();
         }
+    }
+
+    @Override
+    public void connect() {
+        server.addObserver(this);
+        track.getCanoe().addObserver(server);
+    }
+
+    @Override
+    public void disconnect() {
+        server.deleteObserver(this);
+        track.getCanoe().removeObserver(server);
     }
 }
