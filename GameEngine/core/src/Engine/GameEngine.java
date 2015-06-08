@@ -26,7 +26,7 @@ public class GameEngine extends Game {
             setScreen(gameScreen);
         else if (getScreen() == gameScreen){
             server.disconnectAllPlayers();
-            Gdx.app.exit();
+            setScreen(loginScreen);
         }
     }
 }

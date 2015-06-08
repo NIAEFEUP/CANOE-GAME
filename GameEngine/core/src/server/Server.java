@@ -173,11 +173,16 @@ public class Server extends Observable implements Runnable, CanoeObserver{
 
     public void disconnectAllPlayers(){
         for(Client client : clients){
-            try{
+            try {
                 client.sendToClient(ClientServerMessages.DISCONNECT.toString());
+
             }catch (IOException e){
                 e.printStackTrace();
             }
+        }
+
+        for(int i = 0; i < clients.size(); i++) {
+            clients.set(i, null);
         }
     }
 
