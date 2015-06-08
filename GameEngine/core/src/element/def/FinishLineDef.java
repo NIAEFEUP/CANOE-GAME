@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
- * Created by Flávio on 07/06/2015.
+ * Finish line body definition.
  */
 public class FinishLineDef extends GameElementDef {
     private final static BodyDef bodyDef = initBodyDef();
@@ -15,7 +15,12 @@ public class FinishLineDef extends GameElementDef {
         super(bodyDef, initFixtureDef(width), width, HEIGHT);
     }
 
-
+    /**
+     * Creates a fixture definition.
+     *
+     * @param width finish line width's
+     * @return
+     */
     private static FixtureDef initFixtureDef(float width) {
         PolygonShape shape = new PolygonShape();
 
@@ -28,6 +33,11 @@ public class FinishLineDef extends GameElementDef {
         return fixtureDef;
     }
 
+    /**
+     * Creates a body definition.
+     *
+     * @return Created body definition.
+     */
     private static BodyDef initBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

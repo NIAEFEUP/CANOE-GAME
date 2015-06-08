@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import element.GameElement;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Represents a rock
  */
 public class Rock extends GameElement {
     public Rock(Body body, float width, float height) {

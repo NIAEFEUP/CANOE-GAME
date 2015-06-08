@@ -7,11 +7,16 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import element.def.GameElementDef;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * SandBank's body definition.
  */
 public class SandBankDef extends GameElementDef {
     private static final BodyDef bodyDef = initBodyDef();
 
+    /**
+     * Creates a body definition.
+     *
+     * @return Created body definition.
+     */
     private static BodyDef initBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -19,6 +24,13 @@ public class SandBankDef extends GameElementDef {
         return bodyDef;
     }
 
+    /**
+     * Creates a fixture definition.
+     *
+     * @param width     Sandbank's width.
+     * @param height    Sandbank's height
+     * @return          Created FixtureDef.
+     */
     private static FixtureDef initFixtureDef(float width, float height) {
         PolygonShape shape = new PolygonShape();
 

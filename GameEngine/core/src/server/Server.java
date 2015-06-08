@@ -198,8 +198,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
                 for (Enumeration<?> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = (InetAddress) enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                        String ipAddress = inetAddress.getHostAddress().toString();
-                        return ipAddress;
+                        return inetAddress.getHostAddress();
                     }
                 }
             }

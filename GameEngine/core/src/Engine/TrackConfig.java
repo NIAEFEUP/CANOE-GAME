@@ -1,7 +1,7 @@
 package engine;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Track configurations.
  */
 public class TrackConfig {
     public float width;

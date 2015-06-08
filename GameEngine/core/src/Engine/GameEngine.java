@@ -1,11 +1,10 @@
 package engine;
 
-import com.badlogic.gdx.Gdx;
 import server.Server;
 import com.badlogic.gdx.Game;
 
 /**
- * Created by Flávio on 08/06/2015.
+ * Manages the application's states.
  */
 public class GameEngine extends Game {
     private GameScreen gameScreen;
@@ -21,6 +20,9 @@ public class GameEngine extends Game {
         setScreen(loginScreen);
     }
 
+    /**
+     * Changes the game's state.
+     */
     public void nextScreen() {
         if (getScreen() == loginScreen)
             setScreen(gameScreen);

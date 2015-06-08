@@ -9,7 +9,7 @@ import server.Server;
 
 
 /**
- *
+ * Establishes the connection between the inputs received from the server and the game.
  */
 public class RemoteTrackController implements Observer, TrackController{
     private Track track;

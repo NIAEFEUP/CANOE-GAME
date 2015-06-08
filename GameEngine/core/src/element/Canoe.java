@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Represents the canoe and its two paddles.
  */
 public class Canoe extends GameElement {
     private static final float ANGULAR_IMPULSE = 50f;
@@ -22,10 +22,16 @@ public class Canoe extends GameElement {
         observers = new LinkedList<CanoeObserver>();
     }
 
+    /**
+     * Applies an impulse to the left paddle.
+     */
     public void rowLeft() {
         leftPaddle.setAngularVelocity(leftPaddle.getAngularVelocity() + ANGULAR_IMPULSE);
     }
 
+    /**
+     * Applies an impulse to the right paddle.
+     */
     public void rowRight() {
         rightPaddle.setAngularVelocity(rightPaddle.getAngularVelocity() + ANGULAR_IMPULSE);
     }

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Represents a paddle.
  */
 public class Paddle {
     private float angle;
@@ -39,6 +39,7 @@ public class Paddle {
         else
             this.angularVelocity = angularVelocity;
     }
+
 
     public void update(float timeStep) {
         angle += angularVelocity * timeStep;

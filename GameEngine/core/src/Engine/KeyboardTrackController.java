@@ -7,7 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Establishes the connection between the inputs received from the keyboard and the game.
  */
 public class KeyboardTrackController implements InputProcessor, TrackController{
     private Track track;

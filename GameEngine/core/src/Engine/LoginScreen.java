@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import server.Server;
 
 /**
- * Created by Flávio on 08/06/2015.
+ * Login Screen menu
  */
 public class LoginScreen implements Screen {
     private GameEngine game;

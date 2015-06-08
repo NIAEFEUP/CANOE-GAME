@@ -9,7 +9,7 @@ import element.def.GameElementDef;
 import java.util.LinkedList;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * River's body definition.
  */
 public class RiverDef extends GameElementDef {
     private static final BodyDef bodyDef = initBodyDef();
@@ -18,6 +18,13 @@ public class RiverDef extends GameElementDef {
         super(bodyDef, initFixtureDef(width, height), width, height);
     }
 
+    /**
+     * Creates the FixtureDef of the game element.
+     *
+     * @param width     Rivers width.
+     * @param height    Rivers height.
+     * @return          Result FixtureDef.
+     */
     private static FixtureDef initFixtureDef(float width, float height) {
         Vector2[] vertex = new Vector2[4];
         vertex[0] = new Vector2(-width / 2, -height / 2);
@@ -34,6 +41,11 @@ public class RiverDef extends GameElementDef {
         return fixtureDef;
     }
 
+    /**
+     * Creates a body definition.
+     *
+     * @return Created body definition.
+     */
     private static BodyDef initBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

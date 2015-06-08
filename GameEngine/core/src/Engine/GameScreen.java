@@ -1,11 +1,10 @@
 package engine;
 
 import server.Server;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 /**
- * Created by Flávio on 07/06/2015.
+ * Assembles the game logic, rendering and controller.
  */
 public class GameScreen implements Screen {
     private Track track;

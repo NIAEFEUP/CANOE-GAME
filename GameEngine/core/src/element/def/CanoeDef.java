@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
- * Created by Flávio on 19/05/2015.
+ * Canoe's body definition.
  */
 public class CanoeDef extends GameElementDef {
     private static final float WIDTH = 1.0f;
@@ -18,6 +18,11 @@ public class CanoeDef extends GameElementDef {
         super(bodyDef, fixtureDef, WIDTH, HEIGHT);
     }
 
+    /**
+     * Creates a fixture definition.
+     *
+     * @return  Created body definition.
+     */
     private static FixtureDef initFixtureDef() {
         PolygonShape shape = new PolygonShape();
         shape.set(new Vector2[] {new Vector2(0, -HEIGHT / 2),
@@ -35,6 +40,11 @@ public class CanoeDef extends GameElementDef {
         return fixtureDef;
     }
 
+    /**
+     * Creates a body definition.
+     *
+     * @return  Created body definition.
+     */
     private static BodyDef initBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;

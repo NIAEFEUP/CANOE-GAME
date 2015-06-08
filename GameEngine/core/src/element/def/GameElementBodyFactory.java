@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Factory that produces a physics body based on its body definition.
  */
 public class GameElementBodyFactory {
     private World world;

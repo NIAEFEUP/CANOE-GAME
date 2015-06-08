@@ -9,14 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Game's track. Manages the track's logic.
  */
 public class Track implements CanoeObserver, ContactListener {
     private static final float UPDATE_STEP = 1f / 120f;
     private World world;
     private float marginWidth;
     private boolean finished;
-    private long timeRecord;
     private boolean running;
 
     private GameElementBodyFactory factory;
@@ -57,6 +56,13 @@ public class Track implements CanoeObserver, ContactListener {
         sandBanks = new LinkedList<SandBank>();
     }
 
+
+    /**
+     * Adds a rock to the track in the given position.
+     *
+     * @param xpos  Rock's X position.
+     * @param ypos  Rock's Y position.
+     */
     public void addRock(float xpos, float ypos) {
         if (!running) {
             if (!((-river.getWidth() / 2 < xpos && xpos < river.getWidth() / 2) &&
@@ -70,6 +76,14 @@ public class Track implements CanoeObserver, ContactListener {
         }
     }
 
+    /**
+     * Adds a sandBank to the track in the given positions and with the given size.
+     *
+     * @param xpos      Sandbank's center X position.
+     * @param ypos      Sandbank's center Y position.
+     * @param width     Sandbank's width.
+     * @param length    Sandbank's length.
+     */
     public void addSandBank(float xpos, float ypos, float width, float length) {
         if (!running) {
             if (!(((-river.getWidth() + width) / 2 < xpos && xpos < (river.getWidth() - width) / 2) &&
@@ -83,6 +97,9 @@ public class Track implements CanoeObserver, ContactListener {
         }
     }
 
+    /**
+     * Starts the game.
+     */
     public void start() {
         canoe.getBody().setTransform(0, canoe.getHeight() / 2, 0);
         finished = false;
@@ -94,6 +111,10 @@ public class Track implements CanoeObserver, ContactListener {
         lag = 0.0f;
     }
 
+    /**
+     * Updates the game after a given time.
+     * @param deltaTime time passed.
+     */
     public void update(float deltaTime) {
         if (running) {
             if (!finished) {
@@ -130,19 +151,17 @@ public class Track implements CanoeObserver, ContactListener {
     }
 
 
+    /**
+     * Applies an impulse the the right side of the canoe.
+     */
     private void applyImpulseRight() {
         canoe.getBody().applyLinearImpulse(canoe.getBody().getWorldVector(new Vector2(0.0f, 50.0f)), canoe.getBody().getWorldPoint(new Vector2(0.5f, 0.0f)), true);
     }
 
+
     public float getMarginWidth() {
         return marginWidth;
     }
-
-
-    public long getTimeRecord() {
-        return timeRecord;
-    }
-
 
     public Canoe getCanoe() {
         return canoe;

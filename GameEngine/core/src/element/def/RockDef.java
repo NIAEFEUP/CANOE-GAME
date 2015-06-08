@@ -6,13 +6,18 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import element.def.GameElementDef;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Rock's body definition.
  */
 public class RockDef extends GameElementDef {
     private static final float RADIUS = 0.5f;
     private static final BodyDef bodyDef = initBodyDef();
     private static final FixtureDef fixtureDef = initFixtureDef();
 
+    /**
+     * Creates a fixture definition.
+     *
+     * @return created fixture definition.
+     */
     private static FixtureDef initFixtureDef() {
         CircleShape shape = new CircleShape();
         shape.setRadius(RADIUS);
@@ -23,6 +28,11 @@ public class RockDef extends GameElementDef {
         return fixtureDef;
     }
 
+    /**
+     * Creates a body definition.
+     *
+     * @return Created body definition.
+     */
     private static BodyDef initBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

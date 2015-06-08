@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 /**
- * Created by Flávio on 19/05/2015.
+ * Physics body definition of a game element.
  */
 public class GameElementDef {
     float width;

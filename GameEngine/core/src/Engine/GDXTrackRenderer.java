@@ -11,7 +11,7 @@ import element.Rock;
 import element.SandBank;
 
 /**
- * Created by Flávio on 06/06/2015.
+ * Renders the game using libGDX graphical library
  */
 public class GDXTrackRenderer implements TrackRenderer {
     private Track track;
@@ -143,6 +143,12 @@ public class GDXTrackRenderer implements TrackRenderer {
         batch.end();
     }
 
+    /**
+     * Resizes the image according to the screen resolution.
+     *
+     * @param width     screen's width, in pixels.
+     * @param height    screen's height, in pixels.
+     */
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
