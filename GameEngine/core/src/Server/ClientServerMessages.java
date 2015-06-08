@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 /**
  * ClientServerMessages. Enum with the messages used to communicate with the server.

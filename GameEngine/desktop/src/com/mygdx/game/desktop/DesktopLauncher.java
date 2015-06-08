@@ -1,10 +1,8 @@
 package com.mygdx.game.desktop;
 
-import Engine.GameEngine;
-import Server.Server;
+import engine.GameEngine;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.TestApplication;
 
 import java.awt.*;
 

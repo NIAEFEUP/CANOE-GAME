@@ -50,7 +50,7 @@ public final class Decoder {
 
   private static final String[] LOWER_TABLE = {
       "CTRL_PS", " ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-      "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "CTRL_US", "CTRL_ML", "CTRL_DL", "CTRL_BS"
+      "q", "r", "server", "t", "u", "v", "w", "x", "y", "z", "CTRL_US", "CTRL_ML", "CTRL_DL", "CTRL_BS"
   };
 
   private static final String[] MIXED_TABLE = {

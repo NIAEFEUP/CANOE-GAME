@@ -1,4 +1,4 @@
-package Server;/*
+package server;/*
 import com.sun.java.util.jar.pack.Instruction;
 */
 
@@ -21,13 +21,19 @@ public class Server extends Observable implements Runnable, CanoeObserver{
     public final static int LEFT_SIDE = 1;
     public final static int RIGHT_SIDE = 2;
 
-    ArrayList<Client> clients;
+    private ArrayList<Client> clients;
 
     public Server(){
         super();
         this.clients = new ArrayList<Client>(MAX_PLAYERS_NUMBER);
         for(int i = 0; i < MAX_PLAYERS_NUMBER; i++){
             this.clients.add(null);
+        }
+        String ip = getIPAdress();
+        if(QRCodeGenerator.createCode(ip, "core/assets/ServerIP.png"))
+            System.out.println(ip);
+        else{
+            System.out.println("Error creating IP QRCode");
         }
     }
 
@@ -37,6 +43,10 @@ public class Server extends Observable implements Runnable, CanoeObserver{
             this.clients.get(0).setRowSpeed((int) (leftVelocity/ Paddle.MAX_ANGULAR_VELOCITY * 100));
         if(this.clients.get(1) != null)
             this.clients.get(1).setRowSpeed((int) (rightVelocity / Paddle.MAX_ANGULAR_VELOCITY * 100));
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
     }
 
     public class Responder extends ClientConnection {
@@ -182,12 +192,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
     public void run(){
         try {
             DatagramSocket socket = new DatagramSocket(PORT);
-            String ip = getIPAdress();
-            if(QRCodeGenerator.createCode(ip, "core/assets/ServerIP.png"))
-                System.out.println(ip);
-            else{
-                System.out.println("Error creating IP QRCode");
-            }
+
 
             while (true) {
                 byte[] buf = new byte[BUF_SIZE];
