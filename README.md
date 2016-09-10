@@ -1,2 +1,2 @@
-# LPOO-Proj2
-Projecto 2 de LPOO - Canoagem a dois jogadores com comando android 
+# CANOE-GAME
+Projecto para amostra na banca do NIAEFEUP durante a semana de inscrições 2016 - Canoagem a dois jogadores com comando android 
