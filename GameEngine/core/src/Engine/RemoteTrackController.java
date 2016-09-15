@@ -26,7 +26,7 @@ public class RemoteTrackController implements Observer, TrackController{
 
     @Override
     public void update(Observable o, Object arg) {
-        int playerNr = (int) arg;
+        int playerNr = (Integer) arg;
         switch (playerNr){
             case Server.LEFT_SIDE:
                 rowLeft.incrementAndGet();

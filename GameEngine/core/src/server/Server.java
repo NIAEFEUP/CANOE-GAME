@@ -3,7 +3,6 @@ import com.sun.java.util.jar.pack.Instruction;
 */
 
 
-import com.badlogic.gdx.Gdx;
 import element.CanoeObserver;
 import element.Paddle;
 
@@ -52,8 +51,8 @@ public class Server extends Observable implements Runnable, CanoeObserver{
 
     public class Responder extends ClientConnection {
 
-        public Responder(DatagramSocket socket, DatagramPacket packet){
-            super(socket,packet);
+        public Responder(Socket socket){
+            super(socket);
         }
 
         /**
@@ -101,23 +100,23 @@ public class Server extends Observable implements Runnable, CanoeObserver{
          * @return              If the player succeeds to get the position he choose. If the player chooses to disconnect it also returns false.
          * @throws IOException  Throws IOException.
          */
-        public boolean clientOptSide() throws IOException{
-            byte[] buf = client.receiveFromClient();
-            ClientServerMessages message = ClientServerMessages.valueOf(new String(buf).trim());
+        public boolean clientOptSide() throws IOException, ClassNotFoundException {
+            String strMessage = (String) client.receiveFromClient();
+            ClientServerMessages message = ClientServerMessages.valueOf(strMessage.trim());
             switch (message) {
                 case CHOOSE_PLAYER_1:
                     if (clients.get(0) != null)
                         return false;
                     clients.set(0, client);
                     client.setPlayerNr(1);
-                    System.out.println("Client IP: " + client.getAddress() + " is now player " + client.getPlayerNr());
+                    System.out.println("Client IP: " + client.getInetAddress() + " is now player " + client.getPlayerNr());
                     return true;
                 case CHOOSE_PLAYER_2:
                     if (clients.get(1) != null)
                         return false;
                     clients.set(1, client);
                     client.setPlayerNr(2);
-                    System.out.println("Client IP: " + client.getAddress() + " is now player " + client.getPlayerNr());
+                    System.out.println("Client IP: " + client.getInetAddress() + " is now player " + client.getPlayerNr());
                     return true;
                 case DISCONNECT:
                     disconnectClient();
@@ -127,7 +126,7 @@ public class Server extends Observable implements Runnable, CanoeObserver{
         }
 
         public void run() {
-            System.out.println("Atendimento Client in IP: " + packet.getAddress() + " Port:" + packet.getPort());
+            System.out.println("Atendimento Client in IP: " + socket.getInetAddress() + " Port:" + socket.getPort());
             try {
                 makeConnection();
 
@@ -144,8 +143,8 @@ public class Server extends Observable implements Runnable, CanoeObserver{
                 startRowUpdate();
 
                 while(client.getSocket() != null){
-                    byte[] buf = client.receiveFromClient();
-                    ClientServerMessages message = ClientServerMessages.valueOf(new String(buf).trim());
+                    String strMessage = (String) client.receiveFromClient();
+                    ClientServerMessages message = ClientServerMessages.valueOf(strMessage.trim());
                     switch (message){
                         case TICK:
                             sentTick(client.getPlayerNr());
@@ -211,15 +210,13 @@ public class Server extends Observable implements Runnable, CanoeObserver{
 
     public void run(){
         try {
-            DatagramSocket socket = new DatagramSocket(PORT);
+            ServerSocket serverSocket = new ServerSocket(PORT);
 
 
             while (true) {
-                byte[] buf = new byte[BUF_SIZE];
-                DatagramPacket received = new DatagramPacket(buf, buf.length);
-                socket.receive(received);
+                Socket socket = serverSocket.accept();
 
-                new Thread(new Responder(socket,received)).start();
+                new Thread(new Responder(socket)).start();
             }
         }catch (IOException e){
             e.printStackTrace();

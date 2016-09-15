@@ -1,9 +1,10 @@
 package server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 
 /**
  * Class that has the clients information and that handles communication with the client.
@@ -11,19 +12,17 @@ import java.net.InetAddress;
 public class Client {
     final static int ROW_VALUE = 100;
 
-    private int port;
     private int playerNr;
     private int rowSpeed;
-    private InetAddress address;
-    private DatagramSocket socket;
+    private Socket socket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
 
-    public Client(int port, InetAddress address) throws IOException{
-        this.setPort(port);
-        this.setPlayerNr(0);
-        this.setAddress(address);
-        this.setRowSpeed(0);
-        this.setSocket(new DatagramSocket(null));
+    public Client(Socket socket) throws IOException{
+        this.socket = socket;
+        this.out = new ObjectOutputStream(socket.getOutputStream());
+        this.in = new ObjectInputStream(socket.getInputStream());
     }
 
     /**
@@ -33,8 +32,8 @@ public class Client {
      * @throws IOException  Throws IOException.
      */
     public void sendToClient(String message) throws IOException{
-        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.getBytes().length, getAddress(), getPort());
-        getSocket().send(packet);
+        out.writeObject(message);
+        out.flush();
     }
 
 
@@ -44,20 +43,10 @@ public class Client {
      * @return              message received from the cliente in a byte[]
      * @throws IOException  Throws IOException.
      */
-    public byte[] receiveFromClient() throws IOException{
-        byte[] buf = new byte[Server.BUF_SIZE];
-        DatagramPacket received = new DatagramPacket(buf, buf.length);
-        getSocket().receive(received);
-        return buf;
+    public Object receiveFromClient() throws IOException, ClassNotFoundException {
+        return in.readObject();
     }
 
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
 
     public int getPlayerNr() {
         return playerNr;
@@ -75,19 +64,15 @@ public class Client {
         this.rowSpeed = rowSpeed;
     }
 
-    public InetAddress getAddress() {
-        return address;
-    }
-
-    public void setAddress(InetAddress address) {
-        this.address = address;
-    }
-
-    public DatagramSocket getSocket() {
+    public Socket getSocket() {
         return socket;
     }
 
-    public void setSocket(DatagramSocket socket) {
+    public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public InetAddress getInetAddress() {
+        return socket.getInetAddress();
     }
 }
