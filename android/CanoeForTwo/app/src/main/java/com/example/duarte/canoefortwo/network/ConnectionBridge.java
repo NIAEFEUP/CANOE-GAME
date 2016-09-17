@@ -6,9 +6,13 @@ import com.example.duarte.canoefortwo.menus.ChooseSide;
 import com.example.duarte.canoefortwo.Singleton;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.util.Observable;
 
 /**
@@ -22,9 +26,12 @@ public class ConnectionBridge extends Observable{
     public enum State {CONNECTED , NOT_CONNECTED}
 
     private State state;
-    private DatagramSocket socket;
-    private InetAddress ip;
+    private Socket socket;
+    private InetAddress address;
     private int privatePort;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+
     public ConnectionBridge(){
         super();
         this.setState(State.NOT_CONNECTED);
@@ -33,7 +40,6 @@ public class ConnectionBridge extends Observable{
 
     /**
      * Establishes a connection with the server.
-     */
     public class StartConnection implements Runnable{
         String ipString;
         public StartConnection(String ip){
@@ -42,18 +48,13 @@ public class ConnectionBridge extends Observable{
 
         public void run(){
             try {
-                socket = new DatagramSocket();
-                byte[] buf = new byte[BUF_SIZE];
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(ipString), PORT);
-                socket.send(packet);
+                socket = new Socket(address,PORT);
+                this.in = new InputStreamReader(socket.getInputStream());
 
-                buf = new byte[BUF_SIZE];
-                DatagramPacket received = new DatagramPacket(buf, buf.length);
-                socket.receive(received);
 
                 String received_info = new String(received.getData()).trim();
                 if (received_info.equals(ClientServerMessages.SUCCESS.toString().trim())){
-                    ip = received.getAddress();
+                    address = received.getAddress();
                     privatePort = received.getPort();
                     Log.v("Connection", received_info);
                     setState(State.CONNECTED);
@@ -66,6 +67,33 @@ public class ConnectionBridge extends Observable{
             }
         }
     }
+     */
+
+    public boolean startConnection(String address) throws IOException {
+        try {
+            socket = new Socket(address,PORT);
+            this.in = new ObjectInputStream(socket.getInputStream());
+            this.out = new ObjectOutputStream(socket.getOutputStream());
+
+            String receivedInfo = null;
+
+            receivedInfo = ((String) in.readObject()).trim();
+
+            if (receivedInfo.equals(ClientServerMessages.SUCCESS.toString().trim())){
+                Log.v("Connection", receivedInfo);
+                setState(State.CONNECTED);
+                return true;
+            }else{
+                socket = null;
+                this.in = null;
+                this.out = null;
+                return false;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Sends one of the predefined messages to the server through the socket.
@@ -74,9 +102,9 @@ public class ConnectionBridge extends Observable{
      * @throws          IOException
      */
     public void sendMessage(ClientServerMessages message) throws IOException{
-        byte[] buf = message.toString().getBytes();
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, privatePort);
-        socket.send(packet);
+        String strMessage = message.toString();
+        out.writeObject(strMessage);
+        out.flush();
     }
 
     /**
@@ -85,12 +113,8 @@ public class ConnectionBridge extends Observable{
      * @return  message received.
      * @throws IOException
      */
-    public ClientServerMessages receiveMessage() throws IOException{
-        byte[] buf = new byte[BUF_SIZE];
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
-
-        return ClientServerMessages.valueOf(new String(packet.getData()).trim());
+    public ClientServerMessages receiveMessage() throws IOException, ClassNotFoundException {
+        return ClientServerMessages.valueOf(( (String) in.readObject()).trim());
     }
 
     /**
@@ -100,11 +124,8 @@ public class ConnectionBridge extends Observable{
      * @return  message received
      * @throws IOException
      */
-    public String receiveStringMessage() throws IOException{
-        byte[] buf = new byte[BUF_SIZE];
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
-        return new String(packet.getData()).trim();
+    public String receiveStringMessage() throws IOException, ClassNotFoundException {
+        return ((String) in.readObject()).trim();
     }
 
     /***
@@ -122,6 +143,8 @@ public class ConnectionBridge extends Observable{
                     }
                     Singleton.getInstance().getPlayer().setRowSpeed(Integer.valueOf(received));
                 }catch (IOException e){
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -155,6 +178,8 @@ public class ConnectionBridge extends Observable{
             }
         }catch (IOException e){
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
         return false;
@@ -171,16 +196,16 @@ public class ConnectionBridge extends Observable{
      * @throws      IOException
      */
     public boolean connect(String ip) throws IOException {
-        Thread startConnection = new Thread(new StartConnection(ip));
-        startConnection.start();
+        return startConnection(ip);
 
-        long initTime = System.currentTimeMillis();
+       /* long initTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - initTime < 3000){
             if(this.getState() == State.CONNECTED)
                 return true;
         }
-        startConnection.interrupt();
+
         return false;
+        */
     }
 
     /**
