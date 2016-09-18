@@ -101,10 +101,19 @@ public class ConnectionBridge extends Observable{
      * @param message   Message sent
      * @throws          IOException
      */
-    public void sendMessage(ClientServerMessages message) throws IOException{
-        String strMessage = message.toString();
-        out.writeObject(strMessage);
-        out.flush();
+    public void sendMessage(ClientServerMessages message){
+        final String strMessage = message.toString();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    out.writeObject(strMessage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     /**

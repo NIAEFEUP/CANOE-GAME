@@ -43,8 +43,7 @@ public class PlayActivity extends Activity implements Observer {
         strokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try { Singleton.getInstance().getConnection().sendMessage(ClientServerMessages.TICK);}
-                catch (IOException e){e.printStackTrace();}
+                Singleton.getInstance().getConnection().sendMessage(ClientServerMessages.TICK);
             }
         });
 
@@ -61,7 +60,11 @@ public class PlayActivity extends Activity implements Observer {
         new Thread(new Runnable() {
             public void run() {
                 while (Singleton.getInstance().getConnection().getState() == ConnectionBridge.State.CONNECTED) {
+                    int previousRowSpeed = rowSpeed;
                     rowSpeed = Singleton.getInstance().getPlayer().getRowSpeed();
+                    if(rowSpeed == previousRowSpeed){
+                        continue;
+                    }
                     progressBarHandler.post(new Runnable() {
                         public void run() {
 //                            Log.v("progressBarHandler", "" + Player.getRowSpeed());
