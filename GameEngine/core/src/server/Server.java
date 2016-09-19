@@ -154,7 +154,9 @@ public class Server extends Observable implements Runnable, CanoeObserver{
                             break;
                     }
                 }
-            }catch (Exception e){
+            }catch (IOException e){
+                this.disconnectClient();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
