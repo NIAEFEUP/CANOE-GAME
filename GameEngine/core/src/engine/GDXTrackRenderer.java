@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import element.Rock;
 import element.SandBank;
 
+import java.io.File;
+
 /**
  * Renders the game using libGDX graphical library
  */
@@ -43,20 +45,20 @@ public class GDXTrackRenderer implements TrackRenderer {
         camera.update();
         viewport = new FitViewport(cameraWidth, cameraHeight, camera);
 
-        canoeSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Kayak.png")));
-        paddleSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Paddle.png")));
-        finishLineSprite = new Sprite(new Texture(Gdx.files.classpath("assets/FinishLine.png")));
+        canoeSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Kayak.png")));
+        paddleSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Paddle.png")));
+        finishLineSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "FinishLine.png")));
         finishLineSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        rockSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Rock.png")));
+        rockSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Rock.png")));
 
-        sandBankSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Sand.png")));
+        sandBankSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Sand.png")));
         sandBankSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        riverSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Water.png")));
+        riverSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Water.png")));
         riverSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        marginSprite = new Sprite(new Texture(Gdx.files.classpath("assets/Grass.png")));
+        marginSprite = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Grass.png")));
         marginSprite.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
 

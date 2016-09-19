@@ -17,8 +17,8 @@ public class DesktopLauncher {
 		cfg.width = screen.getWidth();
 		cfg.height = screen.getHeight();
 		cfg.fullscreen = false;
+        cfg.disableAudio = true;
 		/////////////////////////////////////////////////////////////
-
 
 		new LwjglApplication(new GameEngine(), cfg);
 	}
