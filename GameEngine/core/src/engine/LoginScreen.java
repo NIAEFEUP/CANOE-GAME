@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import server.Server;
 
+import java.io.File;
+
 /**
  * Login Screen menu
  */
@@ -20,6 +22,7 @@ public class LoginScreen implements Screen {
     private Sprite connectedPlayer;
     private Sprite disconnectedPlayer;
     private Sprite qrCode;
+    private Sprite niLogo;
     private Sprite background;
     private OrthographicCamera camera;
     private FitViewport viewport;
@@ -40,11 +43,13 @@ public class LoginScreen implements Screen {
 
         batch = new SpriteBatch();
 
-        background = new Sprite(new Texture(Gdx.files.classpath("assets/Background.png")));
+        background = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Background.png")));
         background.setSize(cameraWidth, cameraHeight);
-        connectedPlayer = new Sprite(new Texture(Gdx.files.classpath("assets/Connected.png")));
+        niLogo = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Logo.png")));
+        niLogo.setSize(5, 5);
+        connectedPlayer = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Connected.png")));
         connectedPlayer.setSize(5, 5);
-        disconnectedPlayer = new Sprite(new Texture(Gdx.files.classpath("assets/Disconnected.png")));
+        disconnectedPlayer = new Sprite(new Texture(Gdx.files.internal("assets" + File.separator + "Disconnected.png")));
         disconnectedPlayer.setSize(5, 5);
         qrCode = new Sprite(new Texture(Gdx.files.local("ServerIP.png")));
         qrCode.setSize(5, 5);
@@ -70,6 +75,9 @@ public class LoginScreen implements Screen {
         batch.begin();
 
         background.draw(batch);
+
+        niLogo.setPosition(cameraWidth - 2 * niLogo.getWidth(), cameraHeight * 3 / 5);
+        niLogo.draw(batch);
 
         if (server.getClients().get(Server.LEFT_SIDE - 1) != null){
             connectedPlayer.setPosition(connectedPlayer.getWidth(), 0);
